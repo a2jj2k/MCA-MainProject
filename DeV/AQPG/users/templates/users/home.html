@@ -1,0 +1,12 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+    <p>User <b>{{ user.username }} </b>is logged in Successfully.</p>
+    <form method="POST" action="/logout/">
+        {% csrf_token %}
+        <input type="submit" value="Logout">
+
+    </form>
+
+{% endblock content %}
