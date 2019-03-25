@@ -5,7 +5,8 @@
     <p>User <b>{{ user.username }} </b>is logged in Successfully.</p>
     <form method="POST" action="/logout/">
         {% csrf_token %}
-        <input type="submit" value="Logout">
+       <!-- <input type="submit" value="Logout" >-->
+        <a href="{% url 'logout' %}">Logout</a>
 
     </form>
 

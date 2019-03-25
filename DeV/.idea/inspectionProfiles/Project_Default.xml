@@ -10,6 +10,13 @@
           <option value="AQPG.users.forms.*" />
           <option value="AQPG.users.views.*" />
           <option value="AQPG.users.urls.*" />
+          <option value="AQPG.qnppr.models.users" />
+          <option value="AQPG.qnppr.models.Department" />
+          <option value="AQPG.qnppr.admin.*" />
+          <option value="AQPG.AQPG.urls.*" />
+          <option value="AQPG.qnppr.forms.*" />
+          <option value="AQPG.qnppr.views.*" />
+          <option value="AQPG.qnppr.urls.*" />
         </list>
       </option>
     </inspection_tool>

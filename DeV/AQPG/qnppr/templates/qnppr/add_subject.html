@@ -1,0 +1,48 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="content-section" style="background: white; padding: 10px 20px; border: 1px solid #dddddd; border-radius: 3px;">
+        <form method="POST" id="addSubjectForm" data-sem-url="{% url 'ajax_load_sem' %}" autocomplete="off" novalidate>
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Add Subject Here</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">ADD</button>
+            </div>
+        </form>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+    $(document).ready(function() {
+      console.log($.ajax);
+    });
+  </script>
+  <script>
+    $("#id_dept").change(function () {
+      var url = $("#addSubjectForm").attr("data-sem-url");
+      var deptId = $(this).val();
+      console.log(deptId)
+
+      $.ajax({
+        url: url,
+        data: {
+          'dept': deptId
+        },
+        success: function (data) {
+          $("#id_sem").html(data);
+        }
+      });
+
+    });
+  </script>
+       <!-- <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="#">Sign In</a>
+            </small>
+        </div>-->
+    </div>
+
+{% endblock content %}

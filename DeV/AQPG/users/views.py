@@ -4,6 +4,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 from users.forms import *
+from users import config
+
+#global iid
 
 def about(request):
     #cursor = connection.cursor()
@@ -26,6 +29,13 @@ def user_login(request):
         print(username)
         print(password)
         user = authenticate(request, username=username, password=password)
+        request.session['user'] = user.username
+        config.iid=user.username
+        print(config.iid)
+
+        #prof = Profile.objects.get(user=user.id)
+        #print(prof.dept_id)
+
         if user:
             login(request, user)
             return HttpResponseRedirect(reverse('user_success'))
@@ -36,6 +46,11 @@ def user_login(request):
             return redirect('login')
     else:
         return render(request, "users/login.html")
+
+def user_logout(request):
+    if request.method == "POST":
+        logout(request)
+        return HttpResponseRedirect(reverse('login'))
 
 def success(request):
     context = {}
@@ -56,7 +71,8 @@ def userAdd(request):
             return redirect('user_add')
     else:
         u_form = UserRegisterForm_user()
-        p_form = UserProfile(request.POST)
+        p_form = UserProfile()
+        #u_form.fields['username'].attrs['readonly'] = True
     return render(request, 'users/add_user.html', {'u_form': u_form, 'p_form': p_form})
 
 def addDepartment(request):

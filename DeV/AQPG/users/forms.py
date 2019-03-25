@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from users.models import *
 
+
 class UserRegisterForm_user(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=150)
@@ -12,6 +13,11 @@ class UserRegisterForm_user(UserCreationForm):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
 
+    """def __init__(self, *args, **kwargs):
+        super(UserRegisterForm_user, self).__init__(*args, **kwargs)
+        #instance = getattr(self, 'instance', None)
+        #if instance and instance.pk:
+        self.fields['username'].widget.attrs['readonly'] = True"""
 
 
     def save(self, commit=True):
