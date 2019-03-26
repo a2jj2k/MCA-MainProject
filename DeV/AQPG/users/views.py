@@ -29,14 +29,16 @@ def user_login(request):
         print(username)
         print(password)
         user = authenticate(request, username=username, password=password)
-        request.session['user'] = user.username
-        config.iid=user.username
-        print(config.iid)
+        #request.session['user'] = user.username
+        #config.iid=user.username
+        #print(config.iid)
 
         #prof = Profile.objects.get(user=user.id)
         #print(prof.dept_id)
 
         if user:
+            config.iid = user.username
+            print(config.iid)
             login(request, user)
             return HttpResponseRedirect(reverse('user_success'))
         else:
@@ -48,9 +50,12 @@ def user_login(request):
         return render(request, "users/login.html")
 
 def user_logout(request):
-    if request.method == "POST":
+    if request.method == "GET":
+        print("hi")
         logout(request)
         return HttpResponseRedirect(reverse('login'))
+    #else:
+        #return HttpResponseRedirect(reverse('login'))
 
 def success(request):
     context = {}
@@ -87,6 +92,8 @@ def addDepartment(request):
     else:
         form = AddDepartment()
     return render(request, 'users/add_department.html', {'form': form})
+
+
 
 
 

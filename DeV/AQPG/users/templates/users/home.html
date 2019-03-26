@@ -3,11 +3,11 @@
 {% block content %}
 
     <p>User <b>{{ user.username }} </b>is logged in Successfully.</p>
-    <form method="POST" action="/logout/">
+   <!-- <form method="POST" action="/logout/">
         {% csrf_token %}
-       <!-- <input type="submit" value="Logout" >-->
+       &lt;!&ndash; <input type="submit" value="Logout" >&ndash;&gt;
         <a href="{% url 'logout' %}">Logout</a>
 
-    </form>
+    </form>-->
 
 {% endblock content %}

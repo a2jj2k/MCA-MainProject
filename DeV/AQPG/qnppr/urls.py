@@ -5,5 +5,7 @@ from qnppr.views import *
 
 urlpatterns = [
     path('add-sub/', subjectAdd, name="sub_add"),
-    path('ajax/load-cities/', load_cities, name='ajax_load_sem'),
+    path('map-module/', coMapping, name="map_mod"),
+    path('ajax/load-sems/', load_semesters, name='ajax_load_sem'),
+    path('ajax/load-subs/', load_subjects, name='ajax_load_sub'),
 ]

@@ -14,10 +14,6 @@ class AddSubject(forms.ModelForm):
         labels ={
             "dept": "Department", "sem": "Semester", "subcode": "Subject Code","subname": "Subject Name"
         }
-        disabled={
-
-        }
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['sem'].queryset = Semester.objects.all()
@@ -55,3 +51,19 @@ class AddSubject(forms.ModelForm):
         if subname:
             raise forms.ValidationError('Subject with the same Name Exist in the chosen Semester')
         return self.cleaned_data.get('subname')
+
+class CoMapping_form1(forms.ModelForm):
+    class Meta:
+        model = Subject
+        fields = ['dept', 'sem']
+        labels = {
+            'dept': 'Department', 'sem': 'Semester'
+        }
+
+class CoMapping_form2(forms.ModelForm):
+    class Meta:
+        model = Co_mapping
+        fields = ['sub_code', 'module', 'co_id', 'co_desc']
+        labels = {
+            'sub_code': 'Subject', 'co_id': 'CO', 'co_desc': 'CO Description'
+        }

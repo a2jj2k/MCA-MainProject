@@ -5,4 +5,5 @@ from users.models import *
 admin.site.register(Department)
 admin.site.register(Profile)
 
+
 # Register your models here.
