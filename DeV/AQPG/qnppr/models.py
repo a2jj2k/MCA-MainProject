@@ -40,4 +40,17 @@ class Co_mapping(models.Model):
     sub_code = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.co_name
+        return self.co_desc
+
+class Blooms_lvl(models.Model):
+    blm_lvl_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.blm_lvl_name
+
+class Blooms_keyword(models.Model):
+    blm_lvl_name = models.ForeignKey(Blooms_lvl, on_delete=models.CASCADE)
+    blm_verb = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.blm_verb

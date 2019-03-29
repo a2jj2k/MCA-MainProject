@@ -22,7 +22,7 @@ def coMapping(request):
     if request.method == 'POST':
         form_1 = CoMapping_form1(request.POST)
         form_2 = CoMapping_form2(request.POST)
-        if form_2.is_valid():
+        if form_2.is_valid() and form_1.is_valid():
             form_2.save()
             messages.success(request, f'Mapping Added Successfully')
             return redirect('map_mod')
@@ -42,3 +42,14 @@ def load_subjects(request):
     sem_id = request.GET.get('sem')
     subject = Subject.objects.filter(dept_id=dept_id,sem_id=sem_id ).order_by('subname')
     return render(request, 'qnppr/subject_dropdown_list.html', {'sub': subject})
+
+def addBloomsKeywords(request):
+    if request.method =='POST':
+        form = AddBloomKeyword(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Keyword Added Successfully')
+            return redirect('add-blooms')
+    else:
+        form = AddBloomKeyword()
+    return render(request, 'qnppr/add_blooms_keywords.html', {'form': form})

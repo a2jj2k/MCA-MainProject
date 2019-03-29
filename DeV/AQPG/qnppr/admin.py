@@ -7,3 +7,7 @@ admin.site.register(Subject)
 admin.site.register(Module)
 admin.site.register(Co)
 admin.site.register(Co_mapping)
+admin.site.register(Blooms_lvl)
+admin.site.register(Blooms_keyword)
+#Blooms_keyword
+
