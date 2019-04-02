@@ -17,6 +17,7 @@ class UserRegisterForm_user(UserCreationForm):
         super(UserRegisterForm_user, self).__init__(*args, **kwargs)
         #instance = getattr(self, 'instance', None)
         #if instance and instance.pk:
+        self.fields['username'].initial = "Hi"
         self.fields['username'].widget.attrs['readonly'] = True"""
 
 

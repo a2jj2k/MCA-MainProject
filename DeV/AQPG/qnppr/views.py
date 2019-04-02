@@ -32,17 +32,6 @@ def coMapping(request):
     return render(request, 'qnppr/map_subject_modules.html', {'form_1': form_1, 'form_2': form_2})
 
 
-def load_semesters(request):
-    dept_id = request.GET.get('dept')
-    sem = Semester.objects.filter(dept_id_id=dept_id).order_by('sem_name')
-    return render(request, 'qnppr/sem_dropdown_list.html', {'sem': sem})
-
-def load_subjects(request):
-    dept_id = request.GET.get('dept')
-    sem_id = request.GET.get('sem')
-    subject = Subject.objects.filter(dept_id=dept_id,sem_id=sem_id ).order_by('subname')
-    return render(request, 'qnppr/subject_dropdown_list.html', {'sub': subject})
-
 def addBloomsKeywords(request):
     if request.method =='POST':
         form = AddBloomKeyword(request.POST)
@@ -53,3 +42,27 @@ def addBloomsKeywords(request):
     else:
         form = AddBloomKeyword()
     return render(request, 'qnppr/add_blooms_keywords.html', {'form': form})
+
+
+def addMarks(request):
+    if request.method =='POST':
+        form = AddMark(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Mark Added Successfully')
+            return redirect('add-mark')
+    else:
+        form = AddMark()
+    return render(request, 'qnppr/add_marks.html', {'form': form})
+
+
+def load_semesters(request):
+    dept_id = request.GET.get('dept')
+    sem = Semester.objects.filter(dept_id_id=dept_id).order_by('sem_name')
+    return render(request, 'qnppr/sem_dropdown_list.html', {'sem': sem})
+
+def load_subjects(request):
+    dept_id = request.GET.get('dept')
+    sem_id = request.GET.get('sem')
+    subject = Subject.objects.filter(dept_id=dept_id,sem_id=sem_id ).order_by('subname')
+    return render(request, 'qnppr/subject_dropdown_list.html', {'sub': subject})

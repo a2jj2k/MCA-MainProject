@@ -113,3 +113,25 @@ class AddBloomKeyword(forms.ModelForm):
         if verb:
             raise forms.ValidationError('Blooms verb already Exist in the Selected Knowledge level')
         return self.cleaned_data.get('blm_verb')
+
+class AddMark(forms.ModelForm):
+    class Meta:
+        model = Mark
+        fields = ['mark_disp', 'dept']
+
+    def __init__(self, *args, **kwargs):
+        super(AddMark, self).__init__(*args, **kwargs)
+
+        # self.fields['username'].widget.attrs['disabled'] = True
+        self.fields['mark_disp'].widget.attrs['type'] = "number"
+
+    def clean_mark_disp(self):
+        mrk = self.cleaned_data.get('mark_disp')
+        if mrk.isdigit():
+            m = int(mrk)
+            if m > 0:
+                return self.cleaned_data.get('mark_disp')
+            else:
+                raise forms.ValidationError('Invalid Mark')
+        else:
+            raise forms.ValidationError('Invalid Mark')

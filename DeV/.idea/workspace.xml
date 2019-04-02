@@ -14,7 +14,7 @@
         <entry file="file://$PROJECT_DIR$/AQPG/qnppr/forms.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
-              <caret line="104" column="9" lean-forward="true" selection-start-line="104" selection-start-column="9" selection-end-line="104" selection-end-column="9" />
+              <caret line="128" column="48" selection-start-line="128" selection-start-column="48" selection-end-line="128" selection-end-column="48" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -23,12 +23,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AQPG/users/forms.py">
+        <entry file="file://$PROJECT_DIR$/AQPG/qnppr/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="42" column="3" lean-forward="true" selection-start-line="42" selection-start-column="3" selection-end-line="48" selection-end-column="45" />
+            <state relative-caret-position="94">
+              <caret line="51" column="44" selection-start-line="51" selection-start-column="44" selection-end-line="51" selection-end-column="44" />
               <folding>
-                <element signature="e#0#24#0" expanded="true" />
+                <element signature="e#0#45#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -37,8 +37,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AQPG/qnppr/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="52" column="12" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="12" />
+            <state relative-caret-position="220">
+              <caret line="58" column="48" lean-forward="true" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="48" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -82,6 +82,7 @@
       <find>config</find>
       <find>CONTENT-SECTION</find>
       <find>qnppr_co.co</find>
+      <find>#</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -98,7 +99,6 @@
         <option value="$PROJECT_DIR$/AQPG/users/details.py" />
         <option value="$PROJECT_DIR$/AQPG/users/models.py" />
         <option value="$PROJECT_DIR$/AQPG/qnppr/templates/qnppr/sem_dropdown_list.html" />
-        <option value="$PROJECT_DIR$/AQPG/users/forms.py" />
         <option value="$PROJECT_DIR$/AQPG/users/admin.py" />
         <option value="$PROJECT_DIR$/AQPG/qnppr/templates/qnppr/add_subject.html" />
         <option value="$PROJECT_DIR$/AQPG/qnppr/templates/qnppr/subject_dropdown_list.html" />
@@ -108,13 +108,15 @@
         <option value="$PROJECT_DIR$/AQPG/AQPG/urls.py" />
         <option value="$PROJECT_DIR$/AQPG/users/config.py" />
         <option value="$PROJECT_DIR$/AQPG/users/templates/users/add_user.html" />
-        <option value="$PROJECT_DIR$/AQPG/qnppr/models.py" />
-        <option value="$PROJECT_DIR$/AQPG/qnppr/admin.py" />
-        <option value="$PROJECT_DIR$/AQPG/qnppr/urls.py" />
         <option value="$PROJECT_DIR$/AQPG/qnppr/templates/qnppr/add_blooms_keywords.html" />
-        <option value="$PROJECT_DIR$/AQPG/qnppr/views.py" />
         <option value="$PROJECT_DIR$/AQPG/users/views.py" />
         <option value="$PROJECT_DIR$/AQPG/users/templates/users/base.html" />
+        <option value="$PROJECT_DIR$/AQPG/users/forms.py" />
+        <option value="$PROJECT_DIR$/AQPG/qnppr/admin.py" />
+        <option value="$PROJECT_DIR$/AQPG/qnppr/models.py" />
+        <option value="$PROJECT_DIR$/AQPG/qnppr/templates/qnppr/add_marks.html" />
+        <option value="$PROJECT_DIR$/AQPG/qnppr/urls.py" />
+        <option value="$PROJECT_DIR$/AQPG/qnppr/views.py" />
         <option value="$PROJECT_DIR$/AQPG/qnppr/forms.py" />
       </list>
     </option>
@@ -147,19 +149,7 @@
               <item name="AQPG_Pycharm" type="b2602c69:ProjectViewProjectNode" />
               <item name="AQPG_Pycharm" type="462c0819:PsiDirectoryNode" />
               <item name="AQPG" type="462c0819:PsiDirectoryNode" />
-              <item name="AQPG" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AQPG_Pycharm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AQPG_Pycharm" type="462c0819:PsiDirectoryNode" />
-              <item name="AQPG" type="462c0819:PsiDirectoryNode" />
               <item name="qnppr" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AQPG_Pycharm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AQPG_Pycharm" type="462c0819:PsiDirectoryNode" />
-              <item name="AQPG" type="462c0819:PsiDirectoryNode" />
-              <item name="users" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -226,17 +216,20 @@
       <workItem from="1553831977192" duration="415000" />
       <workItem from="1553832417274" duration="8386000" />
       <workItem from="1553847752025" duration="1513000" />
+      <workItem from="1554090272911" duration="6833000" />
+      <workItem from="1554111308401" duration="993000" />
+      <workItem from="1554178833755" duration="1968000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="151251000" />
+    <option name="totallyTimeSpent" value="161045000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="33" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="33" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22281879" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23288591" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -444,50 +437,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AQPG/qnppr/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AQPG/qnppr/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="903">
-          <caret line="47" column="15" selection-start-line="47" selection-start-column="15" selection-end-line="47" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AQPG/users/config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
           <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AQPG/users/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="672">
-          <caret line="38" column="16" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AQPG/qnppr/templates/qnppr/add_blooms_keywords.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="62" selection-start-line="9" selection-start-column="62" selection-end-line="9" selection-end-column="62" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -512,16 +465,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AQPG/qnppr/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AQPG/users/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-11">
@@ -534,18 +477,78 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AQPG/users/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="42" column="3" lean-forward="true" selection-start-line="42" selection-start-column="3" selection-end-line="48" selection-end-column="45" />
+        <state relative-caret-position="189">
+          <caret line="9" column="16" lean-forward="true" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/AQPG/users/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="70" column="46" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AQPG/qnppr/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AQPG/qnppr/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" column="60" selection-start-line="8" selection-start-column="57" selection-end-line="8" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AQPG/qnppr/templates/qnppr/add_marks.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AQPG/qnppr/templates/qnppr/add_blooms_keywords.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="25" selection-end-line="24" selection-end-column="22" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AQPG/qnppr/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="51" column="44" selection-start-line="51" selection-start-column="44" selection-end-line="51" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/AQPG/qnppr/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="52" column="12" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="12" />
+        <state relative-caret-position="220">
+          <caret line="58" column="48" lean-forward="true" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="48" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
@@ -555,7 +558,7 @@
     <entry file="file://$PROJECT_DIR$/AQPG/qnppr/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="104" column="9" lean-forward="true" selection-start-line="104" selection-start-column="9" selection-end-line="104" selection-end-column="9" />
+          <caret line="128" column="48" selection-start-line="128" selection-start-column="48" selection-end-line="128" selection-end-column="48" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>

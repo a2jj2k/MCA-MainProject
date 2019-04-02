@@ -54,3 +54,10 @@ class Blooms_keyword(models.Model):
 
     def __str__(self):
         return self.blm_verb
+
+class Mark(models.Model):
+    mark_disp = models.CharField(max_length=100)
+    dept = models.ForeignKey(Department, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.mark_disp

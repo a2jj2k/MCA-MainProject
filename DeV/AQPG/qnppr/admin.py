@@ -9,5 +9,6 @@ admin.site.register(Co)
 admin.site.register(Co_mapping)
 admin.site.register(Blooms_lvl)
 admin.site.register(Blooms_keyword)
+admin.site.register(Mark)
 #Blooms_keyword
 
