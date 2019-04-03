@@ -142,3 +142,13 @@ class AddMark(forms.ModelForm):
                 raise forms.ValidationError('Invalid Mark')
         else:
             raise forms.ValidationError('Invalid Mark')
+
+
+class AddQuestion(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['subject', 'module', 'desc', 'fig', 'klevel', 'mark']
+
+    def __init__(self, *args, **kwargs):
+        super(AddQuestion, self).__init__(*args, **kwargs)
+        self.fields['desc'].widget.attrs['rows'] = 5

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
 from users.models import *
 
 
@@ -61,3 +62,14 @@ class Mark(models.Model):
 
     def __str__(self):
         return self.mark_disp
+
+class Question(models.Model):
+    desc = models.TextField()
+    fig = models.ImageField(upload_to='question_fig', blank=True)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    module =  models.ForeignKey(Module, on_delete=models.CASCADE)
+    mark = models.ForeignKey(Mark, on_delete=models.CASCADE)
+    klevel = models.ForeignKey(Blooms_lvl, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.desc
