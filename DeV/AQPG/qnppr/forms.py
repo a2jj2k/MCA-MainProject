@@ -94,6 +94,13 @@ class CoMapping_form2(forms.ModelForm):
         co_map = Co_mapping.objects.filter(module=module, sub_code=subject)
         if co_map:
             raise forms.ValidationError('Mapping Already Exist')
+        else:
+            co_id_chk = Co_mapping.objects.filter(co_id=co_id, sub_code=subject)
+            if co_id_chk:
+                raise forms.ValidationError('Selected CO Already mapped for another Module')
+            else:
+                return self.cleaned_data.get('co_id')
+
         return self.cleaned_data.get('co_id')
 
 class AddBloomKeyword(forms.ModelForm):
