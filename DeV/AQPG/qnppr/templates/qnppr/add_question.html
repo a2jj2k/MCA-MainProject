@@ -4,7 +4,7 @@
 {% block content %}
 
     <div class="content-section" style="background: white; padding: 10px 20px; border: 1px solid #dddddd; border-radius: 3px;">
-        <form method="POST" id="addSubjectForm" data-sem-url="{% url 'ajax_load_sem' %}" data-sub-url="{% url 'ajax_load_sub' %}" data-sub_klevel-url="{% url 'ajax_predi_klevel' %}" autocomplete="off" novalidate>
+        <form method="POST" id="addSubjectForm" data-sem-url="{% url 'ajax_load_sem' %}" data-sub-url="{% url 'ajax_load_sub' %}" data-sub_klevel-url="{% url 'ajax_predi_klevel' %}" data-similarity_checker-url="{% url 'ajax_similarity_checker' %}" autocomplete="off" novalidate>
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Add Your Question Here</legend>
@@ -101,6 +101,28 @@
             /*$('#id_klevel').val(t);*/
             $("#id_klevel").val(t);
           /*$("#id_mark").html(data);*/
+        }
+      });
+
+    });
+
+
+    $("#id_desc").focusout(function () {
+      var url = $("#addSubjectForm").attr("data-similarity_checker-url");
+      var qn = $(this).val();
+      console.log(qn)
+
+      $.ajax({
+        url: url,
+        data: {
+          'qn': qn
+        },
+        success: function (data) {
+            /*obj = JSON.parse(data);
+            var t = obj.k;
+            console.log(t)
+            $("#id_klevel").val(t);*/
+            $("#id_mark").html(data);
         }
       });
 

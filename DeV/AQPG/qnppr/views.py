@@ -7,6 +7,7 @@ from django.contrib import messages
 from qnppr.views import *
 from qnppr.forms import *
 import json
+import spacy
 
 # Create your views here.
 
@@ -94,21 +95,29 @@ def load_subjects(request):
 
 def klevel_prediction(request):
     qns = request.GET.get('qn')
-    print("hi")
-    print(qns)
+    #print("hi")
+    #print(qns)
     cursor = connection.cursor()
     cursor.execute("""select * from qnppr_blooms_keyword""")
     dict = {}
     dict = dictfetchall(cursor)
-    print(dict)
+    #print(dict)
     for d in dict:
         temp = str(d['blm_verb'])
         if temp.upper() in qns.upper():
             k_obj = Blooms_lvl.objects.get(id=int(d['blm_lvl_name_id']))
-            print(k_obj.blm_lvl_name)
-            k_dict={
+            #print(k_obj.blm_lvl_name)
+            k_dict = {
                 'k': k_obj.id
             }
             r = json.dumps(k_dict)
-            print(r)
+            #print(r)
             return JsonResponse(r, safe=False)
+
+def similarity_checker(request):
+    print("Inside similarity checker")
+    qns = request.GET.get('qn')
+    nlp = spacy.load('en')
+
+    subject = Subject.objects.all()
+    return render(request, 'qnppr/subject_dropdown_list.html', {'sub': subject})
