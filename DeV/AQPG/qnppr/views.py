@@ -8,6 +8,8 @@ from qnppr.views import *
 from qnppr.forms import *
 import json
 import spacy
+from similarity.cosine import Cosine
+cosine = Cosine(3)
 
 # Create your views here.
 
@@ -89,6 +91,7 @@ def load_semesters(request):
 
 def load_subjects(request):
     dept_id = request.GET.get('dept')
+    print(dept_id)
     sem_id = request.GET.get('sem')
     subject = Subject.objects.filter(dept_id=dept_id,sem_id=sem_id ).order_by('subname')
     return render(request, 'qnppr/subject_dropdown_list.html', {'sub': subject})
@@ -98,7 +101,7 @@ def klevel_prediction(request):
     #print("hi")
     #print(qns)
     cursor = connection.cursor()
-    cursor.execute("""select * from qnppr_blooms_keyword""")
+    cursor.execute("""select * from qnppr_blooms_keyword order by blm_lvl_name_id""")
     dict = {}
     dict = dictfetchall(cursor)
     #print(dict)
@@ -117,7 +120,40 @@ def klevel_prediction(request):
 def similarity_checker(request):
     print("Inside similarity checker")
     qns = request.GET.get('qn')
+    subject = request.GET.get('sub')
+    module = request.GET.get('mod')
+    print(qns)
+    print(subject)
+    print(module)
+    cos_s1 = qns
+    p1 = cosine.get_profile(cos_s1)
     nlp = spacy.load('en')
+    search_doc = nlp(qns)
+    search_doc_no_stop_words = nlp(' '.join([str(t) for t in search_doc if not t.is_stop]))
+    cursor = connection.cursor()
+    cursor.execute("""select * from qnppr_question where subject_id = '%s' and module_id = '%s'"""%(subject, module))
+    dict = {}
+    dict = dictfetchall(cursor)
+    for d in dict:
+        db_doc = nlp(str(d['desc']))
+        db_doc_no_stop_words = nlp(' '.join([str(t) for t in db_doc if not t.is_stop]))
+        cos_s2 = str(d['desc'])
+        p2 = cosine.get_profile(cos_s2)
+        cosine_sim = cosine.similarity_profiles(p1, p2)
+        print("cosine similarity :")
+        sim1 = search_doc_no_stop_words.similarity(db_doc_no_stop_words)
+        sim2 = search_doc.similarity(db_doc)
+        avg = (sim1 + sim2)/2
+        print(search_doc)
+        print(db_doc)
+        print("*******")
+        print(sim1)
+        print(sim2)
+        print(avg)
+        print("cosine similarity :" + str(cosine_sim))
+        print("*******")
+
+
 
     subject = Subject.objects.all()
     return render(request, 'qnppr/subject_dropdown_list.html', {'sub': subject})
