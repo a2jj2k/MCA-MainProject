@@ -9,6 +9,7 @@ from qnppr.forms import *
 import json
 import spacy
 from similarity.cosine import Cosine
+nlp = spacy.load('en')
 cosine = Cosine(3)
 
 # Create your views here.
@@ -116,42 +117,65 @@ def klevel_prediction(request):
             r = json.dumps(k_dict)
             #print(r)
             return JsonResponse(r, safe=False)
+def whRemover(param):
+    wh_words = ['who', 'what', 'how', 'when', 'Where']
+    spltd_str = param.split()
+    #print(type(spltd_str))
+    #print(spltd_str)
+    for i in wh_words:
+        # print(i)
+        for j in spltd_str:
+            # print(j.upper())
+            if i.upper() == j.upper():
+                print("*******Match found*****")
+                spltd_str.remove(j)
+
+    #print(spltd_str)
+
+    whrmvd_str = " ".join(str(x) for x in spltd_str)
+    """for i in spltd_str:
+        whrmvd_str = whrmvd_str + str(i) + " """
+
+    #print(whrmvd_str)
+    return whrmvd_str
+
 
 def similarity_checker(request):
-    print("Inside similarity checker")
+    #print("Inside similarity checker")
     qns = request.GET.get('qn')
     subject = request.GET.get('sub')
     module = request.GET.get('mod')
     print(qns)
     print(subject)
     print(module)
-    cos_s1 = qns
-    p1 = cosine.get_profile(cos_s1)
-    nlp = spacy.load('en')
-    search_doc = nlp(qns)
+
+    qn_frm_usr = qns
+    whrmvd_qn_frm_usr = whRemover(qn_frm_usr)
+    print("From user :" + whrmvd_qn_frm_usr)
+    search_doc = nlp(whrmvd_qn_frm_usr)
     search_doc_no_stop_words = nlp(' '.join([str(t) for t in search_doc if not t.is_stop]))
+    cosine_prof_ip_1 = " ".join(str(x) for x in search_doc_no_stop_words)
+    cosine_ip_1 = cosine.get_profile(cosine_prof_ip_1)
+    #print("stripping  :  "+ cosine_prof_ip_1)
+
     cursor = connection.cursor()
-    cursor.execute("""select * from qnppr_question where subject_id = '%s' and module_id = '%s'"""%(subject, module))
+    cursor.execute("""select * from qnppr_question where subject_id = '%s' and module_id = '%s'""" % (subject, module))
     dict = {}
     dict = dictfetchall(cursor)
+
     for d in dict:
-        db_doc = nlp(str(d['desc']))
+        qn_frm_db = str(d['desc'])
+        whrmvd_qn_frm_db = whRemover(qn_frm_db)
+        print("From db :" + whrmvd_qn_frm_db)
+        db_doc = nlp(whrmvd_qn_frm_db)
         db_doc_no_stop_words = nlp(' '.join([str(t) for t in db_doc if not t.is_stop]))
-        cos_s2 = str(d['desc'])
-        p2 = cosine.get_profile(cos_s2)
-        cosine_sim = cosine.similarity_profiles(p1, p2)
-        print("cosine similarity :")
-        sim1 = search_doc_no_stop_words.similarity(db_doc_no_stop_words)
-        sim2 = search_doc.similarity(db_doc)
-        avg = (sim1 + sim2)/2
-        print(search_doc)
-        print(db_doc)
-        print("*******")
-        print(sim1)
-        print(sim2)
-        print(avg)
-        print("cosine similarity :" + str(cosine_sim))
-        print("*******")
+        cosine_prof_ip_2 = " ".join(str(x) for x in db_doc_no_stop_words)
+
+        cosine_ip_2 = cosine.get_profile(cosine_prof_ip_2)
+
+        cosine_sim = cosine.similarity_profiles(cosine_ip_1, cosine_ip_2)#cosine similarity measuring
+        print("cosine similarity : " + str(cosine_sim))
+
 
 
 
