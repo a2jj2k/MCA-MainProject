@@ -142,6 +142,7 @@ def whRemover(param):
 
 def similarity_checker(request):
     #print("Inside similarity checker")
+    qn_list = []
     qns = request.GET.get('qn')
     subject = request.GET.get('sub')
     module = request.GET.get('mod')
@@ -176,8 +177,14 @@ def similarity_checker(request):
         cosine_sim = cosine.similarity_profiles(cosine_ip_1, cosine_ip_2)#cosine similarity measuring
         print("cosine similarity : " + str(cosine_sim))
 
+        if cosine_sim > 0.49:
+            qn_list.append(qn_frm_db)
 
+    qn_dict_list = []
+    for qn in qn_list:
+        adict = {'qn': qn}
+        qn_dict_list.append(adict)
 
-
+    print(qn_dict_list)
     subject = Subject.objects.all()
-    return render(request, 'qnppr/subject_dropdown_list.html', {'sub': subject})
+    return render(request, 'qnppr/similar_qn_list.html', {'qnlist': qn_dict_list})
