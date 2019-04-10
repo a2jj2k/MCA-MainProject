@@ -69,6 +69,18 @@
         </div>
       </li>
 
+        <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Question
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'add-qn' %}">Add</a>
+          <a class="dropdown-item" href="#">Map</a>
+          <!--<div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>-->
+        </div>
+      </li>
+
     </ul>
 
     <ul class="navbar-nav" >
@@ -109,7 +121,7 @@
           {% endif %}
 
          <div class="content-section" style="background: white; padding: 10px 20px; border: 1px solid #dddddd; border-radius: 3px;">
-        <form method="POST" id="addSubjectForm" data-sem-url="{% url 'ajax_load_sem' %}" data-sub-url="{% url 'ajax_load_sub' %}" data-sub_klevel-url="{% url 'ajax_predi_klevel' %}" data-similarity_checker-url="{% url 'ajax_similarity_checker' %}" autocomplete="off" novalidate>
+        <form method="POST" id="addSubjectForm" enctype="multipart/form-data" data-sem-url="{% url 'ajax_load_sem' %}" data-sub-url="{% url 'ajax_load_sub' %}" data-sub_klevel-url="{% url 'ajax_predi_klevel' %}" data-similarity_checker-url="{% url 'ajax_similarity_checker' %}" autocomplete="off" novalidate>
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Add Your Question Here</legend>

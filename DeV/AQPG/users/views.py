@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 from users.forms import *
+from users.models import *
 from users import config
 
 #global iid
@@ -37,8 +38,13 @@ def user_login(request):
         #print(prof.dept_id)
 
         if user:
+            prof = Profile.objects.get(user=user.id)
             config.iid = user.username
+            config.dept_id = prof.dept_id
             print(config.iid)
+            #print("******")
+            print(prof.dept_id)
+            #print("********")
             login(request, user)
             return HttpResponseRedirect(reverse('user_success'))
         else:

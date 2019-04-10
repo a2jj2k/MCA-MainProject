@@ -74,11 +74,12 @@ def addMarks(request):
 def addQuestions(request):
     if request.method == 'POST':
         form_1 = CoMapping_form1(request.POST)
-        form_2 = AddQuestion(request.POST)
+        form_2 = AddQuestion(request.POST, request.FILES)
         if form_2.is_valid() and form_1.is_valid():
+            #print(request.FILES['fig'])
             form_2.save()
-            messages.success(request, f'Mapping Added Successfully')
-            return redirect('map_mod')
+            messages.success(request, f'Question Added Successfully')
+            return redirect('add-qn')
     else:
         form_1 = CoMapping_form1()
         form_2 = AddQuestion()
@@ -117,6 +118,7 @@ def klevel_prediction(request):
             r = json.dumps(k_dict)
             #print(r)
             return JsonResponse(r, safe=False)
+
 def whRemover(param):
     wh_words = ['who', 'what', 'how', 'when', 'Where']
     spltd_str = param.split()

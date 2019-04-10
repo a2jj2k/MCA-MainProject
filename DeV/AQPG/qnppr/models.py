@@ -65,7 +65,7 @@ class Mark(models.Model):
 
 class Question(models.Model):
     desc = models.TextField()
-    fig = models.ImageField(upload_to='question_fig', blank=True)
+    fig = models.ImageField(upload_to='question_fig/', blank=True)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     module =  models.ForeignKey(Module, on_delete=models.CASCADE)
     mark = models.ForeignKey(Mark, on_delete=models.CASCADE)

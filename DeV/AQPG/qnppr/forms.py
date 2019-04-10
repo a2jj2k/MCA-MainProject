@@ -66,9 +66,9 @@ class CoMapping_form1(forms.ModelForm):
 
         #print(self.cleaned_data.get('dept'))
         config.co_mapping_dept_id = self.cleaned_data.get('dept')
-        print("******")
-        print(config.co_mapping_dept_id)
-        print("############")
+        #print("******")
+        #print(config.co_mapping_dept_id)
+        #print("############")
         return self.cleaned_data.get('dept')
 
 class CoMapping_form2(forms.ModelForm):
@@ -148,7 +148,28 @@ class AddQuestion(forms.ModelForm):
     class Meta:
         model = Question
         fields = ['subject', 'module', 'desc', 'fig', 'klevel', 'mark']
+        labels = {'desc': 'Qn Description','fig': 'Figure', 'klevel': 'Knowledege Level'}
 
     def __init__(self, *args, **kwargs):
         super(AddQuestion, self).__init__(*args, **kwargs)
         self.fields['desc'].widget.attrs['rows'] = 5
+
+    def clean_module(self):
+        dept = Department.objects.get(dept_name=config.dept_id)
+        print(dept)
+        print("*********")
+        #print(dept.id)
+        print("************")
+        sub_name = self.cleaned_data.get('subject')
+        module = self.cleaned_data.get('module')
+        module = Module.objects.get(module_name=module)
+        print(module.id)
+        sub_name = Subject.objects.get(dept=dept, subname=sub_name)
+        print(sub_name.subcode)
+        mapping_exist = Co_mapping.objects.filter(module=module, sub_code=sub_name)
+        if mapping_exist:
+            #raise forms.ValidationError('Module not mapped to any CO')
+            return self.cleaned_data.get('module')
+        else:
+            #return self.cleaned_data.get('module')
+            raise forms.ValidationError('Module not mapped to any CO')
