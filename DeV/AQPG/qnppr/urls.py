@@ -9,8 +9,10 @@ urlpatterns = [
     path('add-bloomskeywords/', addBloomsKeywords, name="add-blooms"),
     path('add-mark/', addMarks, name="add-mark"),
     path('add-question/', addQuestions, name="add-qn"),
+    path('generate-qn-ppr/', generateQnPaper, name="gen-qn-ppr"),
     path('ajax/load-sems/', load_semesters, name='ajax_load_sem'),
     path('ajax/load-subs/', load_subjects, name='ajax_load_sub'),
     path('ajax/load-klevel-predi/', klevel_prediction, name='ajax_predi_klevel'),
     path('ajax/similarity-checker/', similarity_checker, name='ajax_similarity_checker'),
+    path('test/', load_testform, name="test"),
 ]

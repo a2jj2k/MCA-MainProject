@@ -85,6 +85,19 @@ def addQuestions(request):
         form_2 = AddQuestion()
     return render(request, 'qnppr/add_question.html', {'form_1': form_1, 'form_2': form_2})
 
+def generateQnPaper(request):
+    print("Hi")
+    if request.method =='POST':
+        form = GenerateQnPpr(request.POST)
+        """if form.is_valid():
+            form.save()
+            messages.success(request, f'Mark Added Successfully')
+            return redirect('add-mark')"""
+    else:
+        print("inside else")
+        form = GenerateQnPpr()
+    return render(request, 'qnppr/generate_question_paper.html', {'form': form})
+
 
 def load_semesters(request):
     dept_id = request.GET.get('dept')
@@ -190,3 +203,14 @@ def similarity_checker(request):
     print(qn_dict_list)
     subject = Subject.objects.all()
     return render(request, 'qnppr/similar_qn_list.html', {'qnlist': qn_dict_list})
+
+def load_testform(request):
+    if request.method =='POST':
+        form = TestForm(request.POST)
+        """if form.is_valid():
+            form.save()
+            messages.success(request, f'Mark Added Successfully')
+            return redirect('add-mark')"""
+    else:
+        form = TestForm()
+    return render(request, 'qnppr/testform.html', {'form': form})

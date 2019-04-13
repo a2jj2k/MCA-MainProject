@@ -173,3 +173,35 @@ class AddQuestion(forms.ModelForm):
         else:
             #return self.cleaned_data.get('module')
             raise forms.ValidationError('Module not mapped to any CO')
+
+class TestForm(forms.Form):
+    rollno = forms.CharField(max_length=100)
+
+    def clean_rollno(self):
+        mrk = self.cleaned_data.get('rollno')
+        if mrk.isdigit():
+            m = int(mrk)
+            if m > 0:
+                return self.cleaned_data.get('rollno')
+            else:
+                raise forms.ValidationError('Invalid Mark')
+        else:
+            raise forms.ValidationError('Invalid Mark')
+
+class GenerateQnPpr(forms.Form):
+    c = [(0, 0),(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+    c1 = [(0, 0), (2, 2)]
+    exam_name = forms.CharField(max_length=100)
+    mod_1_A = forms.ChoiceField(choices=c, label="Module 1")
+    mod_2_A = forms.ChoiceField(choices=c, label="Module 2")
+    mod_3_A = forms.ChoiceField(choices=c, label="Module 3")
+    mod_4_A = forms.ChoiceField(choices=c, label="Module 4")
+    mod_5_A = forms.ChoiceField(choices=c, label="Module 5")
+    mod_6_A = forms.ChoiceField(choices=c, label="Module 6")
+
+    mod_1_B = forms.ChoiceField(choices=c1, label="Module 1")
+    mod_2_B = forms.ChoiceField(choices=c1, label="Module 2")
+    mod_3_B = forms.ChoiceField(choices=c1, label="Module 3")
+    mod_4_B = forms.ChoiceField(choices=c1, label="Module 4")
+    mod_5_B = forms.ChoiceField(choices=c1, label="Module 5")
+    mod_6_B = forms.ChoiceField(choices=c1, label="Module 6")

@@ -1,0 +1,168 @@
+{% extends 'qnppr/base_generate_qn.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="content-section" style="background: white; padding: 10px 20px; border: 1px solid #dddddd; border-radius: 3px;">
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Generate Question Paper Here</legend>
+
+                <h6>No. of Questions For Part A From Each Module</h6>
+                <div class="form-row">
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_1_A|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_2_A|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_3_A|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_4_A|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_5_A|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_6_A|as_crispy_field }}
+                    </div>
+                </div>
+                <strong><p id="partaindicator" style="font-size: 13px; color: red">Total no.of questions selected for PART-A  0 / 5</p></strong>
+
+                <h6>No. of Questions For Part B From Each Module</h6>
+                <div class="form-row">
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_1_B|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_2_B|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_3_B|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_4_B|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_5_B|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.mod_6_B|as_crispy_field }}
+                    </div>
+                </div>
+                <strong><p id="partbindicator" style="font-size: 13px; color: red">Total no.of questions selected for PART-B  0 / 4</p></strong>
+
+               <!-- {{ form|crispy }}-->
+
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Generate</button>
+            </div>
+        </form>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+            function partAcount() {
+                var cnt_A_module1 = Number($("#id_mod_1_A").val());
+                var cnt_A_module2 = Number($("#id_mod_2_A").val());
+                var cnt_A_module3 = Number($("#id_mod_3_A").val());
+                var cnt_A_module4 = Number($("#id_mod_4_A").val());
+                var cnt_A_module5 = Number($("#id_mod_5_A").val());
+                var cnt_A_module6 = Number($("#id_mod_6_A").val());
+
+                total = cnt_A_module1 + cnt_A_module2 + cnt_A_module3 + cnt_A_module4 + cnt_A_module5 + cnt_A_module6;
+                disp_a = "Total no.of questions selected for PART-A "+  total.toString() +" / 5"
+
+                document.getElementById("partaindicator").innerHTML = disp_a;
+                console.log(total)
+                if (total == 6){
+                    document.getElementById("partaindicator").style.color = "green";
+                }else{
+                    document.getElementById("partaindicator").style.color = "red";
+                }
+            }
+
+            function partBcount() {
+                var cnt_B_module1 = Number($("#id_mod_1_B").val());
+                var cnt_B_module2 = Number($("#id_mod_2_B").val());
+                var cnt_B_module3 = Number($("#id_mod_3_B").val());
+                var cnt_B_module4 = Number($("#id_mod_4_B").val());
+                var cnt_B_module5 = Number($("#id_mod_5_B").val());
+                var cnt_B_module6 = Number($("#id_mod_6_B").val());
+
+                total = cnt_B_module1 + cnt_B_module2 + cnt_B_module3 + cnt_B_module4 + cnt_B_module5 + cnt_B_module6;
+                disp_b = "Total no.of questions selected for PART-B "+  total.toString() +" / 4"
+
+                document.getElementById("partbindicator").innerHTML = disp_b;
+                console.log(total)
+                if (total == 4){
+                    document.getElementById("partbindicator").style.color = "green";
+                }else{
+                    document.getElementById("partbindicator").style.color = "red";
+                }
+            }
+
+            $("#id_mod_1_A").change(function () {
+                partAcount();
+
+            });
+            $("#id_mod_2_A").change(function () {
+                partAcount();
+
+            });
+            $("#id_mod_3_A").change(function () {
+                partAcount();
+
+            });
+            $("#id_mod_4_A").change(function () {
+                partAcount();
+
+            });
+            $("#id_mod_5_A").change(function () {
+                partAcount();
+
+            });
+            $("#id_mod_6_A").change(function () {
+                partAcount();
+
+            });
+
+
+            $("#id_mod_1_B").change(function () {
+                partBcount();
+
+            });
+            $("#id_mod_2_B").change(function () {
+                partBcount();
+
+            });
+            $("#id_mod_3_B").change(function () {
+                partBcount();
+
+            });
+            $("#id_mod_4_B").change(function () {
+                partBcount();
+
+            });
+            $("#id_mod_5_B").change(function () {
+                partBcount();
+
+            });
+            $("#id_mod_6_B").change(function () {
+                partBcount();
+
+            });
+
+
+        </script>
+       <!-- <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="#">Sign In</a>
+            </small>
+        </div>-->
+    </div>
+
+{% endblock content %}
