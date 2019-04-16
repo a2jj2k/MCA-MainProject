@@ -1,5 +1,11 @@
 {% extends 'users/base.html' %}
 
+{% block generate_qnppr %}
+{% ifequal dept 'MCA'%}
+<a class="dropdown-item" href="{% url 'gen-qn-ppr-mca' %}">Qn Ppr Gen</a>
+{% endifequal %}
+{% endblock %}
+
 {% block content %}
 
     <p>User <b>{{ user.username }} </b>is logged in Successfully.</p>

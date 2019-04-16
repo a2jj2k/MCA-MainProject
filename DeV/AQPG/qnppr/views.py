@@ -15,6 +15,8 @@ from similarity.cosine import Cosine
 nlp = spacy.load('en')
 cosine = Cosine(3)
 
+
+
 # Create your views here.
 
 def dictfetchall(cursor):
@@ -60,6 +62,72 @@ def trimmer(ids):
         q = q + str(i) + ","
     q = q[0:len(q) - 1]
     return (q)
+
+def tableFormater(lis):
+    blooms_tbl = []
+
+    for f in lis:
+        k1 = 0
+        k2 = 0
+        k3 = 0
+        k4 = 0
+        k5 = 0
+        k5 = 0
+        k6 = 0
+        if str(f['blm_lvl_name']) == 'K1':
+            k1 = int(f['mark_disp'])
+            k2 = 0
+            k3 = 0
+            k4 = 0
+            k5 = 0
+            k6 = 0
+        elif str(f['blm_lvl_name']) == 'K2':
+            k1 = 0
+            k2 = int(f['mark_disp'])
+            k3 = 0
+            k4 = 0
+            k5 = 0
+            k6 = 0
+        elif str(f['blm_lvl_name']) == 'K3':
+            k1 = 0
+            k2 = 0
+            k3 = int(f['mark_disp'])
+            k4 = 0
+            k5 = 0
+            k6 = 0
+        elif str(f['blm_lvl_name']) == 'K4':
+            k1 = 0
+            k2 = 0
+            k3 = 0
+            k4 = int(f['mark_disp'])
+            k5 = 0
+            k6 = 0
+        elif str(f['blm_lvl_name']) == 'K5':
+            k1 = 0
+            k2 = 0
+            k3 = 0
+            k4 = 0
+            k5 = int(f['mark_disp'])
+            k6 = 0
+        else:
+            k1 = 0
+            k2 = 0
+            k3 = 0
+            k4 = 0
+            k5 = 0
+            k6 = int(f['mark_disp'])
+        temp = {
+            'qn': int(f['qn']),
+            'k1': k1,
+            'k2': k2,
+            'k3': k3,
+            'k4': k4,
+            'k5': k5,
+            'k6': k6
+
+        }
+        blooms_tbl.append(temp)
+    return blooms_tbl
 
 
 def subjectAdd(request):
@@ -125,7 +193,15 @@ def addQuestions(request):
         form_2 = AddQuestion()
     return render(request, 'qnppr/add_question.html', {'form_1': form_1, 'form_2': form_2})
 
-def generateQnPaper(request):
+"""def generateQnPaper(request):
+    if str(config.dept_id) == 'MCA':
+        form_1 = GenerateQnPpr()
+        form_2 = Generate_qn_dep_sem_form()
+        form_3 = Generate_qn_sub_form()
+        return render(request, 'qnppr/generate_question_paper.html', {'form_1': form_1, 'form_2': form_2, 'form_3': form_3})"""
+
+
+def generateQnPaper_MCA(request):
     if request.method =='POST':
         form_1 = GenerateQnPpr(request.POST)
         form_2 = Generate_qn_dep_sem_form(request.POST)
@@ -294,6 +370,10 @@ def generateQnPaper(request):
                 c = c + 1
                 final_result_part_A.append(temp)
 
+
+            #print(final_result_part_A)
+
+
             #print(final_result_part_A)
 
             ##################### code for choosing PART-A qn for internal exam ends here #############################
@@ -425,12 +505,63 @@ def generateQnPaper(request):
                 c = c + 1
                 final_result_part_B.append(temp)
 
-            print(final_result_part_B)
+
+
+            #print(final_result_part_B)
+            final_blooms_tbl = tableFormater(final_result_part_A)
+            final_blooms_tbl = final_blooms_tbl + tableFormater(final_result_part_B)
+
+            total_k1 = 0
+            total_k2 = 0
+            total_k3 = 0
+            total_k4 = 0
+            total_k5 = 0
+            total_k6 = 0
+
+            for i in final_blooms_tbl:
+                total_k1 = total_k1 + i['k1']
+                total_k2 = total_k2 + i['k2']
+                total_k3 = total_k3 + i['k3']
+                total_k4 = total_k4 + i['k4']
+                total_k5 = total_k5 + i['k5']
+                total_k6 = total_k6 + i['k6']
+                print(i)
+
+            print(total_k1, total_k2, total_k3, total_k4, total_k5, total_k6)
+
+            total_k1 = round((total_k1/42)*100,4)
+            total_k2 = round((total_k2/42)*100,4)
+            total_k3 = round((total_k3/42)*100,4)
+            total_k4 = round((total_k4/42)*100,4)
+            total_k5 = round((total_k5/42)*100,4)
+            total_k6 = round((total_k6/42)*100,4)
+
+            print(total_k1, total_k2, total_k3, total_k4, total_k5, total_k6)
+
+            tempo = {
+                'qn': 'Percentage',
+                'k1': total_k1,
+                'k2': total_k2,
+                'k3': total_k3,
+                'k4': total_k4,
+                'k5': total_k5,
+                'k6': total_k6
+
+            }
+            final_blooms_tbl.append(tempo)
+            for i in final_blooms_tbl:
+                print(i)
+
+
+
+
+
 
 
             context = {
                 'part_A': final_result_part_A,
                 'part_B': final_result_part_B,
+                'blooms_tbl': final_blooms_tbl
             }
             return render(request, 'qnppr/generated_qnppr_mca_internal.html', context)
 

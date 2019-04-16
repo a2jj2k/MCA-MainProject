@@ -70,6 +70,8 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'add-qn' %}">Add</a>
           <a class="dropdown-item" href="#">Map</a>
+          {% block generate_qnppr %}{% endblock %}
+          <!--<a class="dropdown-item" href="#">Qn Ppr Gen</a>-->
           <!--<div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>-->
         </div>

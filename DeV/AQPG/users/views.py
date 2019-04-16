@@ -66,6 +66,7 @@ def user_logout(request):
 def success(request):
     context = {}
     context['user'] = request.user
+    context['dept'] = str(config.dept_id)
     return render(request, 'users/home.html', context)
 
 def userAdd(request):
