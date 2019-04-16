@@ -6,8 +6,11 @@ from django.urls import reverse
 from django.contrib import messages
 from qnppr.views import *
 from qnppr.forms import *
+from users.models import *
+from users import config
 import json
 import spacy
+import random
 from similarity.cosine import Cosine
 nlp = spacy.load('en')
 cosine = Cosine(3)
@@ -21,6 +24,43 @@ def dictfetchall(cursor):
         dict(zip(columns, row))
         for row in cursor.fetchall()
     ]
+
+def fisheyates(ary):
+    a = len(ary)
+    b = a-1
+    for d in range(b, 0, -1):
+        e = random.randint(0, d)
+        if e == d:
+            continue
+        ary[d], ary[e] = ary[e], ary[d]
+    return ary
+
+def chooser(names, limit):
+    """ Function that choose random qn id's without repeatition """
+    container = []
+    i = 0
+    while i < limit:
+        #random.shuffle(names)
+        names = fisheyates(names)
+        # print (random.choice(names))
+        temp = (random.choice(names))
+        if temp in container:
+            random.shuffle(names)
+        else:
+            container.append(temp)
+            random.shuffle(names)
+            i = i + 1
+    return container
+
+
+def trimmer(ids):
+    """ Function that trims and prepares the query input ids """
+    q = ""
+    for i in ids:
+        q = q + str(i) + ","
+    q = q[0:len(q) - 1]
+    return (q)
+
 
 def subjectAdd(request):
     #form = AddSubject()
@@ -86,17 +126,335 @@ def addQuestions(request):
     return render(request, 'qnppr/add_question.html', {'form_1': form_1, 'form_2': form_2})
 
 def generateQnPaper(request):
-    print("Hi")
     if request.method =='POST':
-        form = GenerateQnPpr(request.POST)
-        """if form.is_valid():
-            form.save()
-            messages.success(request, f'Mark Added Successfully')
-            return redirect('add-mark')"""
+        form_1 = GenerateQnPpr(request.POST)
+        form_2 = Generate_qn_dep_sem_form(request.POST)
+        form_3 = Generate_qn_sub_form(request.POST)
+        exam_type = request.POST['exm_type']
+        subject = int(request.POST['sub_code'])
+        sub = str(subject)
+
+        randomlypkdqns_parta = []
+        randomlypkdqns_partb = []
+
+
+        if exam_type == 'Internal':
+            mod1_qncnt_a = int(request.POST['mod_1_A'])
+            mod2_qncnt_a = int(request.POST['mod_2_A'])
+            mod3_qncnt_a = int(request.POST['mod_3_A'])
+            mod4_qncnt_a = int(request.POST['mod_4_A'])
+            mod5_qncnt_a = int(request.POST['mod_5_A'])
+            mod6_qncnt_a = int(request.POST['mod_6_A'])
+            #tot_cnt_parta = mod1_qncnt_a + mod2_qncnt_a + mod3_qncnt_a + mod4_qncnt_a + mod5_qncnt_a + mod6_qncnt_a
+            #print(tot_cnt_parta)
+            mod1_qncnt_b = int(request.POST['mod_1_B'])
+            mod2_qncnt_b = int(request.POST['mod_2_B'])
+            mod3_qncnt_b = int(request.POST['mod_3_B'])
+            mod4_qncnt_b = int(request.POST['mod_4_B'])
+            mod5_qncnt_b = int(request.POST['mod_5_B'])
+            mod6_qncnt_b = int(request.POST['mod_6_B'])
+            #tot_cnt_partb = mod1_qncnt_b + mod2_qncnt_b + mod3_qncnt_b + mod4_qncnt_b + mod5_qncnt_b + mod6_qncnt_b
+            #print(tot_cnt_partb)
+            cur_mod_1 = connection.cursor()
+            cur_mod_2 = connection.cursor()
+            cur_mod_3 = connection.cursor()
+            cur_mod_4 = connection.cursor()
+            cur_mod_5 = connection.cursor()
+            cur_mod_6 = connection.cursor()
+
+            ###################### code for choosing PART-A qn for internal exam begins here #########################
+
+            cur_mod_1.execute("""SELECT  * FROM qnppr_question WHERE module_id = 1 AND mark_id = 1 
+                                AND subject_id = '%d'"""%(subject))
+            res_mod1 = dictfetchall(cur_mod_1)
+            #print("*********")
+            #print(res_mod1)
+            #print("***********")
+            qn_mod1 = []
+            for r in res_mod1:
+                qn_mod1.append(r['id'])
+            #print("############")
+            #print(qn_mod1)
+            #print("###############")
+
+
+
+            cur_mod_2.execute("""SELECT  * FROM qnppr_question WHERE module_id = 2 AND mark_id = 1 
+                                AND subject_id = '%d'"""%(subject))
+            res_mod2 = dictfetchall(cur_mod_2)
+            # print("*********")
+            # print(res_mod1)
+            # print("***********")
+            qn_mod2 = []
+            for r in res_mod2:
+                qn_mod2.append(r['id'])
+            #print("############")
+            #print(qn_mod2)
+            #print("###############")
+
+
+            cur_mod_3.execute("""SELECT  * FROM qnppr_question WHERE module_id = 3 AND mark_id = 1 
+                                            AND subject_id = '%d'""" % (subject))
+            res_mod3 = dictfetchall(cur_mod_3)
+            # print("*********")
+            # print(res_mod1)
+            # print("***********")
+            qn_mod3 = []
+            for r in res_mod3:
+                qn_mod3.append(r['id'])
+            #print("############")
+            #print(qn_mod3)
+            #print("###############")
+
+
+            cur_mod_4.execute("""SELECT  * FROM qnppr_question WHERE module_id = 4 AND mark_id = 1 
+                                                        AND subject_id = '%d'""" % (subject))
+            res_mod4 = dictfetchall(cur_mod_4)
+            # print("*********")
+            # print(res_mod1)
+            # print("***********")
+            qn_mod4 = []
+            for r in res_mod4:
+                qn_mod4.append(r['id'])
+            # print("############")
+            # print(qn_mod4)
+            # print("###############")
+
+
+            cur_mod_5.execute("""SELECT  * FROM qnppr_question WHERE module_id = 5 AND mark_id = 1 
+                                                                    AND subject_id = '%d'""" % (subject))
+            res_mod5 = dictfetchall(cur_mod_5)
+            # print("*********")
+            # print(res_mod1)
+            # print("***********")
+            qn_mod5 = []
+            for r in res_mod5:
+                qn_mod5.append(r['id'])
+            # print("############")
+            # print(qn_mod4)
+            # print("###############")
+
+
+            cur_mod_6.execute("""SELECT  * FROM qnppr_question WHERE module_id = 6 AND mark_id = 1 
+                                                                                AND subject_id = '%d'""" % (subject))
+            res_mod6 = dictfetchall(cur_mod_6)
+            # print("*********")
+            # print(res_mod1)
+            # print("***********")
+            qn_mod6 = []
+            for r in res_mod6:
+                qn_mod6.append(r['id'])
+            #print("############")
+            #print(qn_mod6)
+            #print("###############")
+
+
+            randomlypkdqns_parta = randomlypkdqns_parta + chooser(qn_mod1, mod1_qncnt_a)
+            #print("random")
+            #print(randomlypkdqns_parta)
+            randomlypkdqns_parta = randomlypkdqns_parta + chooser(qn_mod2, mod2_qncnt_a)
+            #print(randomlypkdqns_parta)
+            randomlypkdqns_parta = randomlypkdqns_parta + chooser(qn_mod3, mod3_qncnt_a)
+            #print(randomlypkdqns_parta)
+            randomlypkdqns_parta = randomlypkdqns_parta + chooser(qn_mod4, mod4_qncnt_a)
+            #print(randomlypkdqns_parta)
+            randomlypkdqns_parta = randomlypkdqns_parta + chooser(qn_mod5, mod5_qncnt_a)
+            #print(randomlypkdqns_parta)
+            randomlypkdqns_parta = randomlypkdqns_parta + chooser(qn_mod6, mod6_qncnt_a)
+            #print(randomlypkdqns_parta)
+
+            slctd_ids_parta = trimmer(randomlypkdqns_parta)
+            #print(slctd_ids_parta)
+
+            #query = """select qn_desc,blm_lvl from qns_tbl where qn_code in (" + slctd_ids_parta + ")"""
+            query = """SELECT qq.desc, qb.blm_lvl_name, qm.mark_disp, qc.co_cd_name,qq.fig
+                        FROM qnppr_question qq
+                        LEFT OUTER JOIN qnppr_blooms_lvl qb ON qb.id = qq.klevel_id
+                        LEFT OUTER JOIN qnppr_mark qm ON qm.id = qq.mark_id
+                        LEFT OUTER JOIN qnppr_co_mapping qcm ON qcm.module_id = qq.module_id
+                        LEFT OUTER JOIN qnppr_co qc ON qc.id = qcm.co_id_id
+                        WHERE qq.id in (""" + slctd_ids_parta + """) AND qq.subject_id =""" + sub
+            #print(query)
+            cursor = connection.cursor()
+            cursor.execute(query)
+            result_part_A = dictfetchall(cursor)
+            final_result_part_A = []
+
+            c = 1
+            for r in result_part_A:
+                temp ={
+                    'qn': c,
+                    'desc': r['desc'],
+                    'blm_lvl_name': r['blm_lvl_name'],
+                    'mark_disp': r['mark_disp'],
+                    'co_cd_name': r['co_cd_name'],
+                    'fig': r['fig']
+
+                }
+                c = c + 1
+                final_result_part_A.append(temp)
+
+            #print(final_result_part_A)
+
+            ##################### code for choosing PART-A qn for internal exam ends here #############################
+
+            """************************************************************************"""
+
+            #################### code for choosing PART-B qn for internal exam begins here ############################
+
+            cur_mod_1.execute("""SELECT  * FROM qnppr_question WHERE module_id = 1 AND mark_id = 3 
+                                            AND subject_id = '%d'""" % (subject))
+            res_mod1 = dictfetchall(cur_mod_1)
+            # print("*********")
+            # print(res_mod1)
+            # print("***********")
+            qn_mod1 = []
+            for r in res_mod1:
+                qn_mod1.append(r['id'])
+            # print("############")
+            # print(qn_mod1)
+            # print("###############")
+
+            cur_mod_2.execute("""SELECT  * FROM qnppr_question WHERE module_id = 2 AND mark_id = 3
+                                            AND subject_id = '%d'""" % (subject))
+            res_mod2 = dictfetchall(cur_mod_2)
+            # print("*********")
+            # print(res_mod1)
+            # print("***********")
+            qn_mod2 = []
+            for r in res_mod2:
+                qn_mod2.append(r['id'])
+            # print("############")
+            # print(qn_mod2)
+            # print("###############")
+
+            cur_mod_3.execute("""SELECT  * FROM qnppr_question WHERE module_id = 3 AND mark_id = 3 
+                                                        AND subject_id = '%d'""" % (subject))
+            res_mod3 = dictfetchall(cur_mod_3)
+            # print("*********")
+            # print(res_mod1)
+            # print("***********")
+            qn_mod3 = []
+            for r in res_mod3:
+                qn_mod3.append(r['id'])
+            # print("############")
+            # print(qn_mod3)
+            # print("###############")
+
+            cur_mod_4.execute("""SELECT  * FROM qnppr_question WHERE module_id = 4 AND mark_id = 3
+                                                                    AND subject_id = '%d'""" % (subject))
+            res_mod4 = dictfetchall(cur_mod_4)
+            # print("*********")
+            # print(res_mod1)
+            # print("***********")
+            qn_mod4 = []
+            for r in res_mod4:
+                qn_mod4.append(r['id'])
+            # print("############")
+            # print(qn_mod4)
+            # print("###############")
+
+            cur_mod_5.execute("""SELECT  * FROM qnppr_question WHERE module_id = 5 AND mark_id = 3
+                                                                                AND subject_id = '%d'""" % (subject))
+            res_mod5 = dictfetchall(cur_mod_5)
+            # print("*********")
+            # print(res_mod1)
+            # print("***********")
+            qn_mod5 = []
+            for r in res_mod5:
+                qn_mod5.append(r['id'])
+            # print("############")
+            # print(qn_mod4)
+            # print("###############")
+
+            cur_mod_6.execute("""SELECT  * FROM qnppr_question WHERE module_id = 6 AND mark_id = 3 
+                                                                                            AND subject_id = '%d'""" % (
+                subject))
+            res_mod6 = dictfetchall(cur_mod_6)
+            # print("*********")
+            # print(res_mod1)
+            # print("***********")
+            qn_mod6 = []
+            for r in res_mod6:
+                qn_mod6.append(r['id'])
+            # print("############")
+            # print(qn_mod6)
+            # print("###############")
+
+            randomlypkdqns_partb = randomlypkdqns_partb + chooser(qn_mod1, mod1_qncnt_b)
+            #print("random")
+            #print(randomlypkdqns_partb)
+            randomlypkdqns_partb = randomlypkdqns_partb + chooser(qn_mod2, mod2_qncnt_b)
+            #print(randomlypkdqns_partb)
+            randomlypkdqns_partb = randomlypkdqns_partb + chooser(qn_mod3, mod3_qncnt_b)
+            #print(randomlypkdqns_partb)
+            randomlypkdqns_partb = randomlypkdqns_partb + chooser(qn_mod4, mod4_qncnt_b)
+            #print(randomlypkdqns_partb)
+            randomlypkdqns_partb = randomlypkdqns_partb + chooser(qn_mod5, mod5_qncnt_b)
+            #print(randomlypkdqns_partb)
+            randomlypkdqns_partb = randomlypkdqns_partb + chooser(qn_mod6, mod6_qncnt_b)
+            #print(randomlypkdqns_partb)
+
+            slctd_ids_partb = trimmer(randomlypkdqns_partb)
+            #print(slctd_ids_partb)
+
+
+            query = """SELECT qq.desc, qb.blm_lvl_name, qm.mark_disp, qc.co_cd_name,qq.fig 
+                                    FROM qnppr_question qq
+                                    LEFT OUTER JOIN qnppr_blooms_lvl qb ON qb.id = qq.klevel_id
+                                    LEFT OUTER JOIN qnppr_mark qm ON qm.id = qq.mark_id
+                                    LEFT OUTER JOIN qnppr_co_mapping qcm ON qcm.module_id = qq.module_id
+                                    LEFT OUTER JOIN qnppr_co qc ON qc.id = qcm.co_id_id
+                                    WHERE qq.id in (""" + slctd_ids_partb + """) AND qq.subject_id =""" + sub
+            #print(query)
+            cursor = connection.cursor()
+            cursor.execute(query)
+            result_part_B = dictfetchall(cursor)
+            final_result_part_B = []
+
+            for r in result_part_B:
+                temp ={
+                    'qn': c,
+                    'desc': r['desc'],
+                    'blm_lvl_name': r['blm_lvl_name'],
+                    'mark_disp': r['mark_disp'],
+                    'co_cd_name': r['co_cd_name'],
+                    'fig': r['fig']
+
+                }
+                c = c + 1
+                final_result_part_B.append(temp)
+
+            print(final_result_part_B)
+
+
+            context = {
+                'part_A': final_result_part_A,
+                'part_B': final_result_part_B,
+            }
+            return render(request, 'qnppr/generated_qnppr_mca_internal.html', context)
+
+            """*****************************************************************************"""
+
+            ########################### code for choosing PART-B qn for internal exam ends here ####################################
+
+
+        """cursor = connection.cursor()
+        cursor.execute('''select * from qnppr_question''')
+        a = dictfetchall(cursor)
+        print(a)
+        print("*****************************************************************************")
+        q = []
+        for d in a:
+            q.append(d['desc'])
+        print(q)
+        t = request.POST['mod_1_A']
+        print(t)"""
     else:
-        print("inside else")
-        form = GenerateQnPpr()
-    return render(request, 'qnppr/generate_question_paper.html', {'form': form})
+        form_1 = GenerateQnPpr()
+        form_2 = Generate_qn_dep_sem_form()
+        form_3 = Generate_qn_sub_form()
+    return render(request, 'qnppr/generate_question_paper.html', {'form_1': form_1, 'form_2' : form_2, 'form_3': form_3})
 
 
 def load_semesters(request):

@@ -4,53 +4,74 @@
 {% block content %}
 
     <div class="content-section" style="background: white; padding: 10px 20px; border: 1px solid #dddddd; border-radius: 3px;">
-        <form method="POST" autocomplete="off">
+        <form method="POST" id="generateqnppr" data-sem-url="{% url 'ajax_load_sem' %}" data-sub-url="{% url 'ajax_load_sub' %}" autocomplete="off" novalidate>
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Generate Question Paper Here</legend>
+                <!--{{ form_2|crispy }}-->
+                 <div class="form-row">
+                    <div class="form-group col-md-3 mb-0">
+                        {{ form_1.exm_type|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-9 mb-0">
+                        {{ form_1.exam_name|as_crispy_field }}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3 mb-0">
+                        {{ form_2.dept|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-3 mb-0">
+                        {{ form_2.sem|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form_3.sub_code|as_crispy_field }}
+                    </div>
+                </div>
 
                 <h6>No. of Questions For Part A From Each Module</h6>
                 <div class="form-row">
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_1_A|as_crispy_field }}
+                        {{ form_1.mod_1_A|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_2_A|as_crispy_field }}
+                        {{ form_1.mod_2_A|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_3_A|as_crispy_field }}
+                        {{ form_1.mod_3_A|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_4_A|as_crispy_field }}
+                        {{ form_1.mod_4_A|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_5_A|as_crispy_field }}
+                        {{ form_1.mod_5_A|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_6_A|as_crispy_field }}
+                        {{ form_1.mod_6_A|as_crispy_field }}
                     </div>
                 </div>
-                <strong><p id="partaindicator" style="font-size: 13px; color: red">Total no.of questions selected for PART-A  0 / 5</p></strong>
+                <strong><p id="partaindicator" style="font-size: 13px; color: red">Total no.of questions selected for PART-A  0 / 6</p></strong>
 
                 <h6>No. of Questions For Part B From Each Module</h6>
                 <div class="form-row">
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_1_B|as_crispy_field }}
+                        {{ form_1.mod_1_B|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_2_B|as_crispy_field }}
+                        {{ form_1.mod_2_B|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_3_B|as_crispy_field }}
+                        {{ form_1.mod_3_B|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_4_B|as_crispy_field }}
+                        {{ form_1.mod_4_B|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_5_B|as_crispy_field }}
+                        {{ form_1.mod_5_B|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-2 mb-0">
-                        {{ form.mod_6_B|as_crispy_field }}
+                        {{ form_1.mod_6_B|as_crispy_field }}
                     </div>
                 </div>
                 <strong><p id="partbindicator" style="font-size: 13px; color: red">Total no.of questions selected for PART-B  0 / 4</p></strong>
@@ -59,12 +80,52 @@
 
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Generate</button>
+                <button id="generate" formtarget="_blank" class="btn btn-outline-info" type="submit">Generate</button>
             </div>
         </form>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+    $("#id_dept").change(function () {
+      var url = $("#generateqnppr").attr("data-sem-url");
+      var deptId = $(this).val();
+      console.log(deptId)
+
+      $.ajax({
+        url: url,
+        data: {
+          'dept': deptId
+        },
+        success: function (data) {
+          $("#id_sem").html(data);
+        }
+      });
+
+    });
+
+    $("#id_sem").change(function () {
+      var url = $("#generateqnppr").attr("data-sub-url");
+      var semId = $(this).val();
+      var deptId=$("#id_dept").val();
+      console.log(deptId)
+
+      $.ajax({
+        url: url,
+        data: {
+          'dept': deptId,
+            'sem': semId
+        },
+        success: function (data) {
+          $("#id_sub_code").html(data);
+        }
+      });
+
+    });
+  </script>
 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script>
+            var total_A;
+            var total_B;
             function partAcount() {
                 var cnt_A_module1 = Number($("#id_mod_1_A").val());
                 var cnt_A_module2 = Number($("#id_mod_2_A").val());
@@ -73,12 +134,12 @@
                 var cnt_A_module5 = Number($("#id_mod_5_A").val());
                 var cnt_A_module6 = Number($("#id_mod_6_A").val());
 
-                total = cnt_A_module1 + cnt_A_module2 + cnt_A_module3 + cnt_A_module4 + cnt_A_module5 + cnt_A_module6;
-                disp_a = "Total no.of questions selected for PART-A "+  total.toString() +" / 5"
+                total_A = cnt_A_module1 + cnt_A_module2 + cnt_A_module3 + cnt_A_module4 + cnt_A_module5 + cnt_A_module6;
+                disp_a = "Total no.of questions selected for PART-A "+  total_A.toString() +" / 6"
 
                 document.getElementById("partaindicator").innerHTML = disp_a;
-                console.log(total)
-                if (total == 6){
+                console.log(total_A)
+                if (total_A == 6){
                     document.getElementById("partaindicator").style.color = "green";
                 }else{
                     document.getElementById("partaindicator").style.color = "red";
@@ -93,12 +154,12 @@
                 var cnt_B_module5 = Number($("#id_mod_5_B").val());
                 var cnt_B_module6 = Number($("#id_mod_6_B").val());
 
-                total = cnt_B_module1 + cnt_B_module2 + cnt_B_module3 + cnt_B_module4 + cnt_B_module5 + cnt_B_module6;
-                disp_b = "Total no.of questions selected for PART-B "+  total.toString() +" / 4"
+                total_B = cnt_B_module1 + cnt_B_module2 + cnt_B_module3 + cnt_B_module4 + cnt_B_module5 + cnt_B_module6;
+                disp_b = "Total no.of questions selected for PART-B "+  total_B.toString() +" / 4"
 
                 document.getElementById("partbindicator").innerHTML = disp_b;
-                console.log(total)
-                if (total == 4){
+                console.log(total_B)
+                if (total_B == 4){
                     document.getElementById("partbindicator").style.color = "green";
                 }else{
                     document.getElementById("partbindicator").style.color = "red";
@@ -154,6 +215,27 @@
             $("#id_mod_6_B").change(function () {
                 partBcount();
 
+            });
+
+            $('#generate').click(function(){
+                if (total_A != 6 && total_B != 4){
+                    alert('Total no.of selected questions should be \n PART - A :  6\n PART - B :  4');
+                    event.preventDefault();
+                    $("#id_mod_1_A").val(0);
+                    $("#id_mod_2_A").val(0);
+                    $("#id_mod_3_A").val(0);
+                    $("#id_mod_4_A").val(0);
+                    $("#id_mod_5_A").val(0);
+                    $("#id_mod_6_A").val(0);
+
+                    $("#id_mod_1_B").val(0);
+                    $("#id_mod_2_B").val(0);
+                    $("#id_mod_3_B").val(0);
+                    $("#id_mod_4_B").val(0);
+                    $("#id_mod_5_B").val(0);
+                    $("#id_mod_6_B").val(0);
+
+                }
             });
 
 

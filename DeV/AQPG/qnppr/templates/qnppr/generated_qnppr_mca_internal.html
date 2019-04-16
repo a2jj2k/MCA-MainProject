@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h4>PART A</h4>
+{% for a in part_A %}
+<p> {{ a.desc }}</p>
+
+{% endfor %}
+
+<h4>PART B</h4>
+{% for b in part_B %}
+<p>{{ b.desc }}</p>
+{% if forloop.counter|divisibleby:2 %}
+
+{% else %}
+<b>OR</b>
+{% endif %}
+{% endfor %}
+
+</body>
+</html>
