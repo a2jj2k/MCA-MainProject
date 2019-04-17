@@ -17,6 +17,8 @@
           <option value="AQPG.qnppr.forms.*" />
           <option value="AQPG.qnppr.views.*" />
           <option value="AQPG.qnppr.urls.*" />
+          <option value="AQPG.qnppr.utils.StringIO" />
+          <option value="AQPG.qnppr.utils.link_callback" />
         </list>
       </option>
     </inspection_tool>

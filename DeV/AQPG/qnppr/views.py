@@ -11,9 +11,18 @@ from users import config
 import json
 import spacy
 import random
+import datetime
 from similarity.cosine import Cosine
 nlp = spacy.load('en')
 cosine = Cosine(3)
+
+from django.http import HttpResponse
+from django.views.generic import View
+import datetime
+
+from qnppr.utils import *
+
+
 
 
 
@@ -563,7 +572,15 @@ def generateQnPaper_MCA(request):
                 'part_B': final_result_part_B,
                 'blooms_tbl': final_blooms_tbl
             }
-            return render(request, 'qnppr/generated_qnppr_mca_internal.html', context)
+            tab = {
+                'blooms_tbl': final_blooms_tbl
+            }
+            #return render(request, 'qnppr/generated_qnppr_mca_internal.html', context)
+            #pdftry = verpdf('qnppr/generated_qnppr_mca_internal.html', 'qnppr/table.html', context, tab)
+            pdf = render_to_pdf('qnppr/generated_qnppr_mca_internal.html', context)
+            #pdf = render_to_pdf('qnppr/generated_qnppr_mca_internal.html', 'qnppr/table.html', context, tab)
+            return HttpResponse(pdf, content_type='application/pdf')
+            #return HttpResponse(pdftry, content_type='application/pdf')
 
             """*****************************************************************************"""
 
@@ -703,3 +720,14 @@ def load_testform(request):
     else:
         form = TestForm()
     return render(request, 'qnppr/testform.html', {'form': form})
+
+"""class GeneratePdf(View):
+    def get(self, request, *args, **kwargs):
+        data = {
+             'today': datetime.date.today(),
+             'amount': 39.99,
+            'customer_name': 'Cooper Mann',
+            'order_id': 1233434,
+        }
+        pdf = render_to_pdf('blog/invoice.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')"""

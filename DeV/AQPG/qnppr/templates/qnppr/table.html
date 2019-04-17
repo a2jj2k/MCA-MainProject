@@ -3,41 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        @media print {
-  .new-page {
-    page-break-before: always;
-  }
-}
-    </style>
 </head>
 <body>
-
-<h4>PART A</h4>
-{% for a in part_A %}
-<p> {{ a.desc }} {{ a.blm_lvl_name }}</p>
-
-{% endfor %}
-
-<h4>PART B</h4>
-{% for b in part_B %}
-<p>{{ b.desc }} {{ b.blm_lvl_name }}</p>
-{% if forloop.counter|divisibleby:2 %}
-
-{% else %}
-<b>OR</b>
-{% endif %}
-{% endfor %}
-
-    <table border="1" cellspacing="0" cellpadding="5"  align="center" class="new-page">
+    <table border="1" cellspacing="0" cellpadding="5"  align="center">
         <tr>
-            <th width="70px"></th>
-            <th width="50px">K1</th>
-            <th width="50px">K2</th>
-            <th width="50px">K3</th>
-            <th width="50px">K4</th>
-            <th width="50px">K5</th>
-            <th width="50px">K6</th>
+            <th width="50px"></th>
+            <th width="70px">K1</th>
+            <th width="70px">K2</th>
+            <th width="70px">K3</th>
+            <th width="70px">K4</th>
+            <th width="70px">K5</th>
+            <th width="70px">K6</th>
         </tr>
         {% for b in blooms_tbl %}
         <tr>
@@ -82,6 +58,5 @@
         </tr>
         {% endfor %}
     </table>
-
 </body>
 </html>
