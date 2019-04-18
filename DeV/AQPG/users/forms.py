@@ -69,10 +69,11 @@ class UserProfile(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['dept_id', 'image']
+        fields = ['dept_id', 'is_student', 'image']
         labels = {
             "dept_id": "Department Name",
-            "image": "Profile Picture"
+            "image": "Profile Picture",
+            "is_student": "Is Student"
         }
 
 class AddDepartment(forms.ModelForm):

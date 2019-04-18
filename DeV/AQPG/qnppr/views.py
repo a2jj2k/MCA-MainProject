@@ -572,15 +572,8 @@ def generateQnPaper_MCA(request):
                 'part_B': final_result_part_B,
                 'blooms_tbl': final_blooms_tbl
             }
-            tab = {
-                'blooms_tbl': final_blooms_tbl
-            }
-            #return render(request, 'qnppr/generated_qnppr_mca_internal.html', context)
-            #pdftry = verpdf('qnppr/generated_qnppr_mca_internal.html', 'qnppr/table.html', context, tab)
             pdf = render_to_pdf('qnppr/generated_qnppr_mca_internal.html', context)
-            #pdf = render_to_pdf('qnppr/generated_qnppr_mca_internal.html', 'qnppr/table.html', context, tab)
             return HttpResponse(pdf, content_type='application/pdf')
-            #return HttpResponse(pdftry, content_type='application/pdf')
 
             """*****************************************************************************"""
 

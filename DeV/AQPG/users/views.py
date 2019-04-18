@@ -72,7 +72,7 @@ def success(request):
 def userAdd(request):
     if request.method == 'POST':
         u_form = UserRegisterForm_user(request.POST)
-        p_form = UserProfile(request.POST)
+        p_form = UserProfile(request.POST, request.FILES)
         if u_form.is_valid() and p_form.is_valid():
             user = u_form.save()
             profile = p_form.save(commit=False)
@@ -84,7 +84,6 @@ def userAdd(request):
     else:
         u_form = UserRegisterForm_user()
         p_form = UserProfile()
-        #u_form.fields['username'].attrs['readonly'] = True
     return render(request, 'users/add_user.html', {'u_form': u_form, 'p_form': p_form})
 
 def addDepartment(request):
