@@ -40,13 +40,25 @@ def user_login(request):
         if user:
             prof = Profile.objects.get(user=user.id)
             config.iid = user.username
+            config.full_name = user.first_name + " " + user.last_name
+            config.is_super_user = user.is_superuser
+            config.is_student = prof.is_student
             config.dept_id = prof.dept_id
-            print(config.iid)
             #print("******")
-            print(prof.dept_id)
+            print(config.iid)
+            print(config.full_name)
+            print(config.is_super_user)
+            print(config.is_student)
+            print(config.dept_id)
             #print("********")
+            context = {
+                'is_superuser': config.is_super_user,
+                'full_name': config.full_name,
+                'is_student': config.is_student
+            }
             login(request, user)
-            return HttpResponseRedirect(reverse('user_success'))
+            #return HttpResponseRedirect(reverse('user_success'), context)
+            return render(request, "users/home.html", context)
         else:
             #context["error"] = "Invalid credentials !"
             messages.error(request, 'Invalid credentials !')
@@ -84,7 +96,14 @@ def userAdd(request):
     else:
         u_form = UserRegisterForm_user()
         p_form = UserProfile()
-    return render(request, 'users/add_user.html', {'u_form': u_form, 'p_form': p_form})
+        context = {
+            'u_form': u_form,
+            'p_form': p_form,
+            'is_superuser': config.is_super_user,
+            'full_name': config.full_name,
+            'is_student': config.is_student
+        }
+    return render(request, 'users/add_user.html', context)
 
 def addDepartment(request):
     if request.method == 'POST':
@@ -97,7 +116,13 @@ def addDepartment(request):
 
     else:
         form = AddDepartment()
-    return render(request, 'users/add_department.html', {'form': form})
+        context = {
+            'form': form,
+            'is_superuser': config.is_super_user,
+            'full_name': config.full_name,
+            'is_student': config.is_student
+        }
+    return render(request, 'users/add_department.html', context)
 
 
 

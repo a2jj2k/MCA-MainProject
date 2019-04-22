@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('qnppr/', include('qnppr.urls')),
+    path('newsfeed/', include('newsfeed.urls')),
     path('logout/', user_logout, name="logout"),
     #path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('home/', success, name="user_success")

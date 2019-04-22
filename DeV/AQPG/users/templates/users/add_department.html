@@ -1,6 +1,81 @@
 {% extends 'users/base.html' %}
 {% load crispy_forms_tags %}
 
+{% block nav_bar_left_items %}
+<ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          User
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'user_add' %}">Add</a>
+          <a class="dropdown-item" href="#">View</a>
+          <!--<div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>-->
+        </div>
+		</li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Department
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'dept_add' %}">Add</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Subject
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'sub_add' %}">Add</a>
+          <a class="dropdown-item" href="{% url 'map_mod' %}">Map</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Question
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'add-qn' %}">Add</a>
+          <a class="dropdown-item" href="#">Map</a>
+        </div>
+      </li>
+    </ul>
+{% endblock %}
+
+{% block nav_bar_right_items %}
+
+<ul class="navbar-nav" >
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ full_name }}
+        </a>
+        <div class="dropdown-menu" style="left: auto !important; right: 0px" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Profile</a>
+          <a class="dropdown-item" href="#">pswd mngnmnt</a>
+          <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+          <!--<div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>-->
+        </div>
+      </li>
+
+     <!-- <li class="nav-item active">
+        <a class="nav-link" href="#" style="visibility: hidden">Hom<span class="sr-only">(current)</span></a>
+      </li>-->
+    </ul>
+
+{% endblock %}
+
+{% block main_divs %}
+
+<div class="col-md-3"></div>
+        <div class="col-md-5" style="margin-top: 10">
+
+{% endblock %}
+
 {% block content %}
 
     <div class="content-section" style="background: white; padding: 10px 20px; border: 1px solid #dddddd; border-radius: 3px;">
