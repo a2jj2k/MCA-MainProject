@@ -34,6 +34,11 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
 
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        context['full_name'] = config.full_name
+        return context
+
 class PostCreateView(CreateView):
     model = Post
     fields = ['title', 'content']
@@ -46,3 +51,39 @@ class PostCreateView(CreateView):
         context = super(PostCreateView, self).get_context_data(**kwargs)
         context['full_name'] = config.full_name
         return context
+
+
+class PostUpdateView(UserPassesTestMixin, UpdateView):
+    print("inside updateview")
+    model = Post
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+    def get_context_data(self, **kwargs):
+        context = super(PostUpdateView, self).get_context_data(**kwargs)
+        context['full_name'] = config.full_name
+        return context
+
+
+class PostDeleteView(DeleteView):
+    print("inside deleteview")
+    model = Post
+    success_url = '/newsfeed/'
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDeleteView, self).get_context_data(**kwargs)
+        context['full_name'] = config.full_name
+        return context
+
+
+
+

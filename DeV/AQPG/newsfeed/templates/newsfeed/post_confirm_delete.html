@@ -76,7 +76,7 @@
 
 {% endblock %}
 
-{% block content %}
+ {% block content %}
             <style>
                 body {
                     background: #fafafa;
@@ -136,18 +136,17 @@
                     text-decoration: none;
                 }
             </style>
-    {% for post in posts %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Delete Post</legend>
+                <h2>Are you sure you want to delete the post "{{ object.title }}"</h2>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+                <a class="btn btn-outline-secondary" href="{% url 'post-detail' object.id %}">Cancel</a>
             </div>
-            <!--<h2>{{ post.title }}</h2>-->
-              <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-          </div>
-        </article>
-    {% endfor %}
+        </form>
+    </div>
 {% endblock content %}
