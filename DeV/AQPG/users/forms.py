@@ -77,13 +77,14 @@ class UserProfile(forms.ModelForm):
         }
 
 class AddDepartment(forms.ModelForm):
-    dept_name = forms.CharField()
+    #dept_name = forms.CharField()
 
     class Meta:
         model = Department
-        fields = ['dept_name']
+        fields = ['dept_name', 'dept_full_name']
         labels = {
-            "dept_name": "Department Name"
+            "dept_name": "Department Short Name",
+            "dept_full_name": "Department Full Name"
         }
     def clean_dept_name(self):
         dept_name = self.cleaned_data.get('dept_name')

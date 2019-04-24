@@ -209,6 +209,23 @@ def addQuestions(request):
         form_3 = Generate_qn_sub_form()
         return render(request, 'qnppr/generate_question_paper.html', {'form_1': form_1, 'form_2': form_2, 'form_3': form_3})"""
 
+def viewQuestionList(request):
+    if request.method == 'POST':
+        question_list = Question.objects.all()
+        context = {
+            'question_list': question_list
+        }
+        return render(request, 'qnppr/question_list.html', context)
+    else:
+        #form_1 = CoMapping_form1()
+        #form_2 = AddQuestion()
+        question_list = Question.objects.all()
+        context = {
+            'question_list': question_list
+        }
+    return render(request, 'qnppr/question_list.html', context)
+
+
 
 def generateQnPaper_MCA(request):
     if request.method =='POST':
@@ -560,11 +577,6 @@ def generateQnPaper_MCA(request):
             final_blooms_tbl.append(tempo)
             for i in final_blooms_tbl:
                 print(i)
-
-
-
-
-
 
 
             context = {
