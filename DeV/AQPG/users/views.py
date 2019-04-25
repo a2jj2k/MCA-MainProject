@@ -124,6 +124,36 @@ def addDepartment(request):
         }
     return render(request, 'users/add_department.html', context)
 
+def viewUserList(request):
+    form_1 = UserProfile()
+    #user_list = User.objects.all()
+    context = {
+        'form_1': form_1
+    }
+    return render(request, 'users/user_list.html', context)
+
+def userDetails(request, id):
+    if request.method == 'GET':
+        user_obj = User.objects.get(id=id)
+        user_detail = Profile.objects.get(user=user_obj)
+        print(user_detail)
+        context = {
+            'user_obj': user_obj
+        }
+        return render(request, 'users/user_details.html', context)
+    else:
+        return render(request, 'users/user_details.html')
+
+def load_userlist(request):
+    dept_id = request.GET.get('dept')
+    #sem = Semester.objects.filter(dept_id_id=dept_id).order_by('sem_name')
+    pro_list = Profile.objects.filter(dept_id=dept_id)
+    context = {
+        'pro_list': pro_list
+
+    }
+    return render(request, 'users/ajax_user_list.html', context)
+
 
 
 

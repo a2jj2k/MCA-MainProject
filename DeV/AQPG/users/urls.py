@@ -9,5 +9,7 @@ urlpatterns = [
     #path('success/', success, name="user_success"),
     path('add-user/', userAdd, name="user_add"),
     path('add-dept/', addDepartment, name="dept_add"),
-    #path('logout/', user_logout, name="logout")
+    path('view-users/', viewUserList, name="view_users"),
+    path('<int:id>/view-user-details/', userDetails, name="view_user_detail"),
+    path('ajax/user-list/', load_userlist, name='ajax_user_list')
 ]

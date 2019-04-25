@@ -1,0 +1,12 @@
+{% for pro in pro_list %}
+    <div class="card" style="width: 18rem; margin-top: 15px">
+  <img class="card-img-top" src="{{ pro.image.url }}" alt="Card image cap" height="250px" width="250px">
+  <div class="card-body">
+    <h5 class="card-title">{{ pro.user.first_name }} {{ pro.user.last_name }}</h5>
+      <p class="card-text">{{ pro.user.username }}</p>
+    <!--<p class="card-text">{{ user.email }}</p>-->
+    <a href="{% url 'view_user_detail' pro.user.id %}" class="btn btn-primary" target="_blank">More Info</a>
+  </div>
+</div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{%endfor%}

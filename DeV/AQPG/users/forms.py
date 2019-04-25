@@ -93,3 +93,13 @@ class AddDepartment(forms.ModelForm):
         if  dept_name:
             raise forms.ValidationError('Department with the same name already exist')
         return self.cleaned_data.get('dept_name')
+
+class Department_UserListForm(forms.ModelForm):
+    #dept_name = forms.CharField()
+
+    class Meta:
+        model = Department
+        fields = ['dept_name']
+        labels = {
+            "dept_name": "Department"
+        }

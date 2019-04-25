@@ -1,0 +1,122 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block nav_bar_left_items %}
+<ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          User
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'user_add' %}">Add</a>
+          <a class="dropdown-item" href="#">View</a>
+          <!--<div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>-->
+        </div>
+		</li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Department
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'dept_add' %}">Add</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Subject
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'sub_add' %}">Add</a>
+          <a class="dropdown-item" href="{% url 'map_mod' %}">Map</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Question
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'add-qn' %}">Add</a>
+          <a class="dropdown-item" href="#">Map</a>
+        </div>
+      </li>
+    </ul>
+{% endblock %}
+
+{% block nav_bar_right_items %}
+
+<ul class="navbar-nav ml-auto" >
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ full_name }}
+        </a>
+        <div class="dropdown-menu" style="left: auto !important; right: 0px" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Profile</a>
+          <a class="dropdown-item" href="#">pswd mngnmnt</a>
+          <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+          <!--<div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>-->
+        </div>
+      </li>
+
+     <!-- <li class="nav-item active">
+        <a class="nav-link" href="#" style="visibility: hidden">Hom<span class="sr-only">(current)</span></a>
+      </li>-->
+    </ul>
+
+{% endblock %}
+
+{% block main_divs %}
+
+<div class="col-md-1"></div>
+        <div class="col-md-11" style="margin-top: 10">
+
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"></script>-->
+
+
+<form id="userlistform" data-user-list-url="{% url 'ajax_user_list' %}">
+<div class="form-row">
+    <!--<div class="form-group col-md-3 mb-0">
+
+    </div>-->
+    <div class="form-group col-md-3 mb-0">
+    {{ form_1.dept_id|as_crispy_field }}
+    </div>
+    <div class="form-group col-md-3 mb-0">
+
+    </div>
+</div>
+</form>
+
+<div class="row" id="userlist">
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_dept_id").change(function () {
+      var url = $("#userlistform").attr("data-user-list-url");
+      var deptId = $(this).val();
+      console.log(deptId)
+
+      $.ajax({
+        url: url,
+        data: {
+          'dept': deptId
+        },
+        success: function (data) {
+          $("#userlist").html(data);
+        }
+      });
+
+    });
+</script>
+
+{% endblock content %}
