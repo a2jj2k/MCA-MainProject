@@ -126,9 +126,10 @@ def addDepartment(request):
 
 def viewUserList(request):
     form_1 = UserProfile()
-    #user_list = User.objects.all()
+    user_list = User.objects.all()
     context = {
-        'form_1': form_1
+        'form_1': form_1,
+        'user_list': user_list
     }
     return render(request, 'users/user_list.html', context)
 

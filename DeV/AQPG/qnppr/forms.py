@@ -212,6 +212,15 @@ class Generate_qn_sub_form(forms.ModelForm):
         return self.cleaned_data.get('sub_code')
 
 
+class DeptSemForm(forms.ModelForm):
+    class Meta:
+        model = Subject
+        fields = ['dept', 'sem']
+        labels = {
+            'dept': 'Department', 'sem': 'Semester'
+        }
+
+
 
 class GenerateQnPpr(forms.Form):
     c = [(0, 0),(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]

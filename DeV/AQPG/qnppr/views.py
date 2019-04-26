@@ -149,7 +149,13 @@ def subjectAdd(request):
             return redirect('sub_add')
     else:
         form = AddSubject()
-    return render(request, 'qnppr/add_subject.html', {'form': form})
+        context={
+            'form': form,
+            'is_superuser': config.is_super_user,
+            'full_name': config.full_name,
+            'is_student': config.is_student
+        }
+    return render(request, 'qnppr/add_subject.html', context)
 
 def coMapping(request):
     if request.method == 'POST':
@@ -162,7 +168,21 @@ def coMapping(request):
     else:
         form_1 = CoMapping_form1()
         form_2 = CoMapping_form2()
-    return render(request, 'qnppr/map_subject_modules.html', {'form_1': form_1, 'form_2': form_2})
+        context = {
+            'form_1': form_1,
+            'form_2': form_2,
+            'is_superuser': config.is_super_user,
+            'full_name': config.full_name,
+            'is_student': config.is_student
+        }
+        print(context)
+    return render(request, 'qnppr/map_subject_modules.html', {
+                                                'form_1': form_1,
+                                                'form_2': form_2,
+                                                'is_superuser': config.is_super_user,
+                                                'full_name': config.full_name,
+                                                'is_student': config.is_student})
+    #return render(request, 'qnppr/map_subject_modules.html',context)
 
 
 def addBloomsKeywords(request):
@@ -174,7 +194,13 @@ def addBloomsKeywords(request):
             return redirect('add-blooms')
     else:
         form = AddBloomKeyword()
-    return render(request, 'qnppr/add_blooms_keywords.html', {'form': form})
+        context = {
+            'form': form,
+            'is_superuser': config.is_super_user,
+            'full_name': config.full_name,
+            'is_student': config.is_student
+        }
+    return render(request, 'qnppr/add_blooms_keywords.html', context)
 
 
 def addMarks(request):
@@ -186,7 +212,14 @@ def addMarks(request):
             return redirect('add-mark')
     else:
         form = AddMark()
-    return render(request, 'qnppr/add_marks.html', {'form': form})
+        context = {
+            'form': form,
+            'is_superuser': config.is_super_user,
+            'full_name': config.full_name,
+            'is_student': config.is_student
+        }
+
+    return render(request, 'qnppr/add_marks.html', context)
 
 def addQuestions(request):
     if request.method == 'POST':
@@ -200,14 +233,21 @@ def addQuestions(request):
     else:
         form_1 = CoMapping_form1()
         form_2 = AddQuestion()
-    return render(request, 'qnppr/add_question.html', {'form_1': form_1, 'form_2': form_2})
+        context = {
+            'form_1': form_1,
+            'form_2': form_2,
+            'is_superuser': config.is_super_user,
+            'full_name': config.full_name,
+            'is_student': config.is_student
+        }
+    return render(request, 'qnppr/add_question.html', context)
 
 """def generateQnPaper(request):
     if str(config.dept_id) == 'MCA':
         form_1 = GenerateQnPpr()
         form_2 = Generate_qn_dep_sem_form()
         form_3 = Generate_qn_sub_form()
-        return render(request, 'qnppr/generate_question_paper.html', {'form_1': form_1, 'form_2': form_2, 'form_3': form_3})"""
+        return render(request, 'qnppr/generate_question_paper_mca.html', {'form_1': form_1, 'form_2': form_2, 'form_3': form_3})"""
 
 def viewQuestionList(request):
     if request.method == 'POST':
@@ -224,6 +264,53 @@ def viewQuestionList(request):
             'question_list': question_list
         }
     return render(request, 'qnppr/question_list.html', context)
+
+def viewSubjectList(request):
+    form_1 = DeptSemForm()
+    subject_list = Subject.objects.all()
+    context = {
+        'form_1': form_1,
+        'subject_list': subject_list
+    }
+    return render(request, 'qnppr/subject_list.html', context)
+
+def subjectDetails(request, id):
+    if request.method == 'GET':
+        sub_obj = Subject.objects.get(id=id)
+        cursor = connection.cursor()
+        cursor.execute("""SELECT qm.module_name, qc.co_cd_name, qcm.co_desc
+                            FROM qnppr_co_mapping qcm 
+                            LEFT OUTER JOIN qnppr_module qm ON qm.id = qcm.module_id
+                            LEFT OUTER JOIN qnppr_co qc ON qc.id = qcm.co_id_id
+                            WHERE qcm.sub_code_id = '%d'"""%(id))
+        dict = {}
+        dict = dictfetchall(cursor)
+        print(dict)
+        context = {
+            'sub_obj': sub_obj,
+            'co_obj': dict
+        }
+        return render(request, 'qnppr/subject_details.html', context)
+    else:
+        return render(request, 'qnppr/subject_details.html')
+
+def load_subjectlist(request):
+    print("Inside ajaxsubjectlist")
+    dept_id = request.GET.get('dept')
+    sem_id = request.GET.get('sem')
+    print(type(dept_id))
+    print(dept_id)
+    print(type(sem_id))
+    print(sem_id)
+
+    #sem = Semester.objects.filter(dept_id_id=dept_id).order_by('sem_name')
+    subject_list = Subject.objects.filter(dept=dept_id, sem=sem_id)
+    print(subject_list)
+    context = {
+        'subject_list': subject_list
+
+    }
+    return render(request, 'qnppr/ajax_subject_list.html', context)
 
 
 
@@ -607,7 +694,15 @@ def generateQnPaper_MCA(request):
         form_1 = GenerateQnPpr()
         form_2 = Generate_qn_dep_sem_form()
         form_3 = Generate_qn_sub_form()
-    return render(request, 'qnppr/generate_question_paper.html', {'form_1': form_1, 'form_2' : form_2, 'form_3': form_3})
+        context = {
+            'form_1': form_1,
+            'form_2': form_2,
+            'form_3': form_3,
+            'is_superuser': config.is_super_user,
+            'full_name': config.full_name,
+            'is_student': config.is_student
+        }
+    return render(request, 'qnppr/generate_question_paper_mca.html', context)
 
 
 def load_semesters(request):

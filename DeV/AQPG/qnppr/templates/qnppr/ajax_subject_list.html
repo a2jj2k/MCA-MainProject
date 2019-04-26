@@ -1,0 +1,12 @@
+{% for sub in subject_list %}
+    <div class="card" style="width: 18rem; margin-top: 15px">
+  <img class="card-img-top" src="/media/book_2.jpg" alt="Card image cap" height="250px" width="250px">
+  <div class="card-body">
+    <h5 class="card-title">{{ sub.subname }} {{ pro.user.last_name }}</h5>
+      <p class="card-text">{{ sub.sem }}</p>
+    <!--<p class="card-text">{{ user.email }}</p>-->
+    <a href="#" class="btn btn-primary" target="_blank">More Info</a>
+  </div>
+</div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{%endfor%}
