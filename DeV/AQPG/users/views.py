@@ -7,20 +7,46 @@ from users.forms import *
 from users.models import *
 from users import config
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
+
 #global iid
 
-def about(request):
-    #cursor = connection.cursor()
-    #cursor.execute("""select * from blog_post""")
-    #dict = {}
-    #dict = dictfetchall(cursor)
-    #print(dict)
-    '''context = {
-        # 'posts': Post.objects.all()
-         'posts' : dict
-    }'''
-    #return render(request, 'blog/about.html', {'title': 'About'})
-    return render(request, 'users/login.html')
+def welcomeEmailSndr(email, first_name, last_name, username, pswd):
+    email_user = 'mail.aqpg@gmail.com'
+    email_password = '7559955251@Aqpg'
+    email_send = email
+
+    subject = 'Welcome to AQPG System'
+
+    try:
+
+        msg = MIMEMultipart()
+        msg['From'] = email_user
+        msg['To'] = email_send
+        msg['Subject'] = subject
+
+        name = first_name+" "+last_name
+
+        body = """Hi """+name+""",\nWelcome To AQPG\n\nThe complete system for Automated Question Paper generation\n\n\nUsername : """+username+"""\nPassword : """+pswd+"""\n\n\nThanks & Regards\nTeam AQPG\n*** Enfield Technologies ***"""
+        msg.attach(MIMEText(body,'plain'))
+
+        text = msg.as_string()
+        server = smtplib.SMTP('smtp.gmail.com',587)
+        server.starttls()
+        server.login(email_user,email_password)
+
+
+        server.sendmail(email_user,email_send,text)
+        server.quit()
+    except Exception as e :
+        print("No internet Connection")
+        print(e)
+
+
 
 def user_login(request):
     context = {}
@@ -86,10 +112,18 @@ def userAdd(request):
         u_form = UserRegisterForm_user(request.POST)
         p_form = UserProfile(request.POST, request.FILES)
         if u_form.is_valid() and p_form.is_valid():
+            username = u_form.cleaned_data.get('username')
+            password = 'Enfield@123'
+            first_name = u_form.cleaned_data.get('first_name')
+            last_name = u_form.cleaned_data.get('last_name')
+            email = u_form.cleaned_data.get('email')
             user = u_form.save()
             profile = p_form.save(commit=False)
             profile.user = user
             profile.save()
+
+            welcomeEmailSndr(email, first_name, last_name, username, password)
+
             messages.success(request, f'User Successfully Registered')
             print("*******")
             return redirect('user_add')
