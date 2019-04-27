@@ -9,6 +9,7 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post
+from users.models import *
 from users import config
 
 from django.http import HttpResponse
@@ -19,8 +20,36 @@ from django.http import HttpResponse
 from django.views.generic import View
 import datetime
 
-class PostListView(ListView):
+def dictfetchall(cursor):
+    """Return all rows from a cursor as a dict"""
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
+
+def postViewall(request):
+    #form_1 = DeptSemForm()
+    #subject_list = Subject.objects.all()
+    dept = Department.objects.get(dept_name=config.dept_id)
+    cursor = connection.cursor()
+    cursor.execute("""select au.username,up.image, up.user_id, np.id, np.title, np.content
+                            from users_profile up
+                            left outer join auth_user au on au.id = up.user_id
+                            left outer join newsfeed_post np on np.author_id = au.id
+                            where up.dept_id_id = '%d'""" % (dept.id))
+    posts = {}
+    posts = dictfetchall(cursor)
+    print(posts)
+    context = {
+        'posts': posts,
+        'full_name': config.full_name
+    }
+    return render(request, 'newsfeed/newsfeed.html', context)
+
+"""class PostListView(ListView):
     model = Post
+    #queryset = Post.objects.filter(author.user.profile.dept_id = d)
     template_name = 'newsfeed/newsfeed.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
@@ -28,7 +57,9 @@ class PostListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
         context['full_name'] = config.full_name
-        return context
+        return context"""
+
+
 
 
 class PostDetailView(DetailView):

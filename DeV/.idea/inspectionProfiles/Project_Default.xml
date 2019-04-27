@@ -21,6 +21,7 @@
           <option value="AQPG.qnppr.utils.link_callback" />
           <option value="AQPG.newsfeed.admin.*" />
           <option value="AQPG.newsfeed.views.*" />
+          <option value="AQPG.newsfeed.urls.*" />
         </list>
       </option>
     </inspection_tool>
