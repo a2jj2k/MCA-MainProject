@@ -665,13 +665,14 @@ def generateQnPaper_MCA(request):
             for i in final_blooms_tbl:
                 print(i)
 
-
+            print(final_result_part_A)
             context = {
                 'part_A': final_result_part_A,
                 'part_B': final_result_part_B,
                 'blooms_tbl': final_blooms_tbl
             }
             pdf = render_to_pdf('qnppr/generated_qnppr_mca_internal.html', context)
+            #return render(request, 'qnppr/generated_qnppr_mca_internal.html', context)
             return HttpResponse(pdf, content_type='application/pdf')
 
             """*****************************************************************************"""

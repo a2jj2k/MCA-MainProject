@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
         @media print {
   .new-page {
@@ -10,26 +13,160 @@
   }
 }
     </style>
+    <style>
+        @page {
+            size: A4;
+            margin-top: 2cm;
+            margin-left: 2cm;
+            margin-right: 2cm;
+            margin-bottom: 2cm;
+
+            
+        }
+    </style>
 </head>
 <body>
+<div>
+    <center><img src="/media/sjcet.png" height="100px" width="100px"></center>
+    <center><h1 style="font-family:Times New Roman; font-size: 19px;">ST.JOSEPH'S COLLEGE OF ENGINEERING & TECHNOLOGY, PALAI</h1></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px;">(An ISO 9001: 2008 Certified College)</p></center>
+    <center><p style="padding-top: -18px;font-family:Times New Roman; font-size: 13px;">(Affiliated to APJ Abdul Kalam Technological University)</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px; font-weight: bold">DEPARTMENT OF COMPUTER SCIENCE AND APPLICATIONS</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px;">First Internal Assessment Examination &nbsp; March &nbsp; 2019</p></center>
+    <center><p style="padding-top: -17px; font-family:Times New Roman; font-size: 13px;">Semester  1</p></center>
+    <center><p style="padding-top: -10px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">RLMCA 208 &nbsp; Introduction to Machine Learning</p></center>
+</div>
 
-<h4>PART A</h4>
+<div>
+<center><p style="padding-top: 30px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">PART A</p></center>
+<center><p style="padding-top: -15px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">(Each Question carries 3 marks, Answer all Questions)</p></center>
+    <table border="1" cellspacing="0" cellpadding="5"  align="center" style="font-family: 'Times New Roman';font-size: 15px">
+        <!--<col width="10">
+        <col width="200">
+        <col width="10">
+        <col width="10">-->
+        <tr>
+            <th style="width:50px;">Q.No</th>
+            <th style="width:200px;">Questions</th>
+            <th style="width:50px;">K Level</th>
+            <th style="width:50px;">CO</th>
+        </tr>
 {% for a in part_A %}
-<p> {{ a.desc }} {{ a.blm_lvl_name }}</p>
+        <tr>
+            <td style="width:50px;text-align:center">{{ a.qn }}</td>
+            <td style="width:500px;">{{ a.desc }}</td>
+            <td style="width:50px;text-align:center">{{ a.blm_lvl_name }}</td>
+            <td style="width:50px;text-align:center">{{ a.co_cd_name }}</td>
+        </tr>
 
 {% endfor %}
+</table>
+</div>
 
-<h4>PART B</h4>
+<div>
+<center><p style="padding-top: 30px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">PART B</p></center>
+<center><p style="padding-top: -15px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">(Answer any 2 questions, one full question from each module and carries 6 marks.)</p></center>
+<table border="1" cellspacing="0" cellpadding="5"  align="center" style="font-family: 'Times New Roman';font-size: 15px">
+        <!--<col width="10">
+        <col width="200">
+        <col width="10">
+        <col width="10">-->
+        <tr>
+            <th style="width:50px;">Q.No</th>
+            <th style="width:200px;">Questions</th>
+            <th style="width:50px;">K Level</th>
+            <th style="width:50px;">CO</th>
+        </tr>
 {% for b in part_B %}
-<p>{{ b.desc }} {{ b.blm_lvl_name }}</p>
+<tr>
+            <td style="width:50px;text-align:center">{{ b.qn }}</td>
+            <td style="width:500px;">{{ b.desc }}</td>
+            <td style="width:50px;text-align:center">{{ b.blm_lvl_name }}</td>
+            <td style="width:50px;text-align:center">{{ b.co_cd_name }}</td>
+        </tr>
 {% if forloop.counter|divisibleby:2 %}
 
 {% else %}
-<b>OR</b>
+<tr>
+    <td></td>
+    <td style="text-align:center; font-weight: bold">OR</td>
+    <td></td>
+    <td></td>
+
+</tr>
 {% endif %}
 {% endfor %}
+</table>
+</div>
 
-    <table border="1" cellspacing="0" cellpadding="5"  align="center" class="new-page">
+<div class="new-page">
+    <center><img src="/media/sjcet.png" height="100px" width="100px"></center>
+    <center><h1 style="font-family:Times New Roman; font-size: 19px;">ST.JOSEPH'S COLLEGE OF ENGINEERING & TECHNOLOGY, PALAI</h1></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px;">(An ISO 9001: 2008 Certified College)</p></center>
+    <center><p style="padding-top: -18px;font-family:Times New Roman; font-size: 13px;">(Affiliated to APJ Abdul Kalam Technological University)</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px; font-weight: bold">DEPARTMENT OF COMPUTER SCIENCE AND APPLICATIONS</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px;">First Internal Assessment Examination &nbsp; March &nbsp; 2019</p></center>
+    <center><p style="padding-top: -17px; font-family:Times New Roman; font-size: 13px;">Semester  1</p></center>
+    <center><p style="padding-top: -10px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">RLMCA 208 &nbsp; Introduction to Machine Learning</p></center>
+</div>
+
+<div>
+   <table border="1" cellspacing="0" cellpadding="5"  align="center" style="font-family: 'Times New Roman';font-size: 13px">
+        <tr>
+            <th width="70px"></th>
+            <th width="50px">K1</th>
+            <th width="50px">K2</th>
+            <th width="50px">K3</th>
+            <th width="50px">K4</th>
+            <th width="50px">K5</th>
+            <th width="50px">K6</th>
+        </tr>
+        {% for b in blooms_tbl %}
+        <tr>
+            <td align="center"><b>{{ b.qn }}</b></td>
+            {% ifequal b.k1 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k1 }}</td>
+            {% endifequal %}
+
+            {% ifequal b.k2 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k2 }}</td>
+            {% endifequal %}
+
+            {% ifequal b.k3 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k3 }}</td>
+            {% endifequal %}
+
+            {% ifequal b.k4 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k4 }}</td>
+            {% endifequal %}
+
+            {% ifequal b.k5 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k5 }}</td>
+            {% endifequal %}
+
+            {% ifequal b.k6 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k6 }}</td>
+            {% endifequal %}
+
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+    <!--<table border="1" cellspacing="0" cellpadding="5"  align="center" class="new-page">
         <tr>
             <th width="70px"></th>
             <th width="50px">K1</th>
@@ -81,7 +218,7 @@
 
         </tr>
         {% endfor %}
-    </table>
+    </table>-->
 
 </body>
 </html>
