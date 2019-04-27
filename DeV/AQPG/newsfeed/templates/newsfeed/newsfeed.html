@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block nav_bar_left_items %}
+{% if is_superuser == 'True' %}
 <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -9,12 +10,11 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'user_add' %}">Add</a>
-          <a class="dropdown-item" href="#">View</a>
+          <a class="dropdown-item" href="{% url 'view_users' %}">View</a>
           <!--<div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>-->
         </div>
 		</li>
-
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Department
@@ -30,20 +30,68 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'sub_add' %}">Add</a>
-          <a class="dropdown-item" href="{% url 'map_mod' %}">Map</a>
+            <a class="dropdown-item" href="{% url 'sub_list' %}">View</a>
+        </div>
+      </li>
+    </ul>
+{% else %}
+<ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Subject
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'sub_add' %}">Add</a>
+          <a class="dropdown-item" href="{% url 'sub_list' %}">View</a>
+            <a class="dropdown-item" href="{% url 'map_mod' %}">Map</a>
+          <!--<div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>-->
+        </div>
+		</li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Mark
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'add_mark' %}">Add</a>
         </div>
       </li>
 
       <li class="nav-item dropdown ">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Newsfeed
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'post-create' %}">Post</a>
+          <a class="dropdown-item" href="{% url 'newsfeed-home' %}">View</a>
+        </div>
+      </li>
+
+    <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Question
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'add-qn' %}">Add</a>
-          <a class="dropdown-item" href="#">Map</a>
+          <a class="dropdown-item" href="{% url 'qn-list' %}">View</a>
         </div>
       </li>
+    <li class="nav-item">
+        {% if dept_id == 'MCA' %}
+            <a class="nav-link" href="{% url 'gen-qn-ppr-mca' %}">Generate Qn Paper</a>
+        {% elif dept_id == 'MBA' %}
+            <a class="nav-link" href="#">Generate Qn Paper</a>
+        {% else %}
+            <a class="nav-link" href="#">Generate Qn Paper</a>
+        {% endif %}
+   </li>
+
+
+    <li class="nav-item">
+      <a class="nav-link" href="#">Archive</a>
+   </li>
     </ul>
+{% endif %}
 {% endblock %}
 
 {% block nav_bar_right_items %}

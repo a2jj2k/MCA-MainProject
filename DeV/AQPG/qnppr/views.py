@@ -149,11 +149,12 @@ def subjectAdd(request):
             return redirect('sub_add')
     else:
         form = AddSubject()
-        context={
+        context = {
             'form': form,
             'is_superuser': config.is_super_user,
             'full_name': config.full_name,
-            'is_student': config.is_student
+            'is_student': config.is_student,
+            'dept_id': config.dept_id
         }
     return render(request, 'qnppr/add_subject.html', context)
 
@@ -173,7 +174,8 @@ def coMapping(request):
             'form_2': form_2,
             'is_superuser': config.is_super_user,
             'full_name': config.full_name,
-            'is_student': config.is_student
+            'is_student': config.is_student,
+            'dept_id': config.dept_id
         }
         print(context)
     return render(request, 'qnppr/map_subject_modules.html', {
@@ -181,7 +183,8 @@ def coMapping(request):
                                                 'form_2': form_2,
                                                 'is_superuser': config.is_super_user,
                                                 'full_name': config.full_name,
-                                                'is_student': config.is_student})
+                                                'is_student': config.is_student,
+                                                'dept_id': config.dept_id})
     #return render(request, 'qnppr/map_subject_modules.html',context)
 
 
@@ -198,7 +201,8 @@ def addBloomsKeywords(request):
             'form': form,
             'is_superuser': config.is_super_user,
             'full_name': config.full_name,
-            'is_student': config.is_student
+            'is_student': config.is_student,
+            'dept_id': config.dept_id
         }
     return render(request, 'qnppr/add_blooms_keywords.html', context)
 
@@ -216,7 +220,8 @@ def addMarks(request):
             'form': form,
             'is_superuser': config.is_super_user,
             'full_name': config.full_name,
-            'is_student': config.is_student
+            'is_student': config.is_student,
+            'dept_id': config.dept_id
         }
 
     return render(request, 'qnppr/add_marks.html', context)
@@ -238,7 +243,8 @@ def addQuestions(request):
             'form_2': form_2,
             'is_superuser': config.is_super_user,
             'full_name': config.full_name,
-            'is_student': config.is_student
+            'is_student': config.is_student,
+            'dept_id': config.dept_id
         }
     return render(request, 'qnppr/add_question.html', context)
 

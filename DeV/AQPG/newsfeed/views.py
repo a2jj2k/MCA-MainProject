@@ -10,6 +10,7 @@ from django.views.generic import (
 )
 from .models import Post
 from users.models import *
+
 from users import config
 
 from django.http import HttpResponse
@@ -31,19 +32,32 @@ def dictfetchall(cursor):
 def postViewall(request):
     #form_1 = DeptSemForm()
     #subject_list = Subject.objects.all()
-    dept = Department.objects.get(dept_name=config.dept_id)
+    #dept = Department.objects.get(dept_name=config.dept_id)
     cursor = connection.cursor()
-    cursor.execute("""select au.username,up.image, up.user_id, np.id, np.title, np.content
-                            from users_profile up
-                            left outer join auth_user au on au.id = up.user_id
-                            left outer join newsfeed_post np on np.author_id = au.id
-                            where up.dept_id_id = '%d'""" % (dept.id))
+
+    if str(config.dept_id) == "ADMIN":
+
+        cursor.execute("""select au.username,up.image,up.user_id, np.id,np.title, np.content, np.date_posted
+                                from newsfeed_post np
+                                left outer join auth_user au on np.author_id = au.id
+                                left outer join users_profile up on up.user_id = np.author_id
+                                order by np.date_posted asc""")
+    else:
+        dept = Department.objects.get(dept_name=config.dept_id)
+        cursor.execute("""SELECT au.username,up.image, up.user_id, np.id, np.title, np.content, np.date_posted
+                                    FROM users_profile up
+                                    LEFT OUTER JOIN auth_user au ON au.id = up.user_id
+                                    LEFT OUTER JOIN newsfeed_post np ON np.author_id = au.id
+                                    WHERE up.dept_id_id = '%d' ORDER BY np.date_posted ASC""" % (dept.id))
     posts = {}
     posts = dictfetchall(cursor)
     print(posts)
     context = {
         'posts': posts,
-        'full_name': config.full_name
+        'is_superuser': config.is_super_user,
+        'full_name': config.full_name,
+        'is_student': config.is_student,
+        'dept_id': str(config.dept_id)
     }
     return render(request, 'newsfeed/newsfeed.html', context)
 

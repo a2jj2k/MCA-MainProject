@@ -41,7 +41,7 @@ def user_login(request):
             prof = Profile.objects.get(user=user.id)
             config.iid = user.username
             config.full_name = user.first_name + " " + user.last_name
-            config.is_super_user = user.is_superuser
+            config.is_super_user = str(user.is_superuser)
             config.is_student = prof.is_student
             config.dept_id = prof.dept_id
             #print("******")
@@ -57,8 +57,8 @@ def user_login(request):
                 'is_student': config.is_student
             }
             login(request, user)
-            #return HttpResponseRedirect(reverse('user_success'), context)
-            return render(request, "users/home.html", context)
+            return HttpResponseRedirect(reverse('newsfeed-home'), context)
+            #return render(request, "users/home.html", context)
         else:
             #context["error"] = "Invalid credentials !"
             messages.error(request, 'Invalid credentials !')

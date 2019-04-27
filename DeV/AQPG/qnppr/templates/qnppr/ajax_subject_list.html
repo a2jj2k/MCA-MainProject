@@ -5,7 +5,7 @@
     <h5 class="card-title">{{ sub.subname }} {{ pro.user.last_name }}</h5>
       <p class="card-text">{{ sub.sem }}</p>
     <!--<p class="card-text">{{ user.email }}</p>-->
-    <a href="#" class="btn btn-primary" target="_blank">More Info</a>
+    <a href="{% url 'view_subject_detail' sub.id %}" class="btn btn-primary" target="_blank">More Info</a>
   </div>
 </div>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
