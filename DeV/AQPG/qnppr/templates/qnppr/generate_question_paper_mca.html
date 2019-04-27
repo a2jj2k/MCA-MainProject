@@ -101,7 +101,7 @@
                         {{ form_2.sem|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-6 mb-0">
-                        {{ form_3.sub_code|as_crispy_field }}
+                        {{ form_1.sub_code|as_crispy_field }}
                     </div>
                 </div>
 
@@ -155,7 +155,7 @@
 
             </fieldset>
             <div class="form-group">
-                <button id="generate" formtarget="_blank" class="btn btn-outline-info" type="submit">Generate</button>
+                <button id="generate"  class="btn btn-outline-info" type="submit">Generate</button>
             </div>
         </form>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -177,6 +177,26 @@
 
     });
 
+    $("#id_dept").change(function () {
+        $("#id_mod_1_A").val(0);
+        $("#id_mod_2_A").val(0);
+        $("#id_mod_3_A").val(0);
+        $("#id_mod_4_A").val(0);
+        $("#id_mod_5_A").val(0);
+        $("#id_mod_6_A").val(0);
+
+        $("#id_mod_1_B").val(0);
+        $("#id_mod_2_B").val(0);
+        $("#id_mod_3_B").val(0);
+        $("#id_mod_4_B").val(0);
+        $("#id_mod_5_B").val(0);
+        $("#id_mod_6_B").val(0);
+
+        partAcount();
+        partBcount();
+
+    });
+
     $("#id_sem").change(function () {
       var url = $("#generateqnppr").attr("data-sub-url");
       var semId = $(this).val();
@@ -193,6 +213,46 @@
           $("#id_sub_code").html(data);
         }
       });
+
+    });
+
+    $("#id_sem").change(function () {
+        $("#id_mod_1_A").val(0);
+        $("#id_mod_2_A").val(0);
+        $("#id_mod_3_A").val(0);
+        $("#id_mod_4_A").val(0);
+        $("#id_mod_5_A").val(0);
+        $("#id_mod_6_A").val(0);
+
+        $("#id_mod_1_B").val(0);
+        $("#id_mod_2_B").val(0);
+        $("#id_mod_3_B").val(0);
+        $("#id_mod_4_B").val(0);
+        $("#id_mod_5_B").val(0);
+        $("#id_mod_6_B").val(0);
+
+        partAcount();
+        partBcount();
+
+    });
+
+    $("#id_sub_code").change(function () {
+        $("#id_mod_1_A").val(0);
+        $("#id_mod_2_A").val(0);
+        $("#id_mod_3_A").val(0);
+        $("#id_mod_4_A").val(0);
+        $("#id_mod_5_A").val(0);
+        $("#id_mod_6_A").val(0);
+
+        $("#id_mod_1_B").val(0);
+        $("#id_mod_2_B").val(0);
+        $("#id_mod_3_B").val(0);
+        $("#id_mod_4_B").val(0);
+        $("#id_mod_5_B").val(0);
+        $("#id_mod_6_B").val(0);
+
+        partAcount();
+        partBcount();
 
     });
   </script>
@@ -310,6 +370,8 @@
                     $("#id_mod_5_B").val(0);
                     $("#id_mod_6_B").val(0);
 
+                }else{
+                    $("#generate").attr('formtarget', '_blank');
                 }
             });
 

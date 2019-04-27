@@ -207,8 +207,9 @@ class Generate_qn_sub_form(forms.ModelForm):
 
     def clean_sub_code(self):
         s_code = self.cleaned_data.get('sub_code')
-        config.SUB_CUR_SLCTD = s_code
+        config.SUB_CUR_SLCTD = s_code.subname
         print(config.SUB_CUR_SLCTD)
+        print(type(config.SUB_CUR_SLCTD))
         return self.cleaned_data.get('sub_code')
 
 
@@ -226,6 +227,7 @@ class GenerateQnPpr(forms.Form):
     c = [(0, 0),(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
     c1 = [(0, 0), (2, 2)]
     exm = [('Internal', 'Internal')]
+    sub_code = forms.ModelChoiceField(queryset=Subject.objects.all(), label="Subject")
     exm_type = forms.ChoiceField(choices=exm, label="Exam Type")
     exam_name = forms.CharField(max_length=100)
     mod_1_A = forms.ChoiceField(choices=c, label="Module 1")
@@ -245,14 +247,21 @@ class GenerateQnPpr(forms.Form):
 
     """ module wise count checking method for PART - A  begins """
     def clean_mod_1_A(self):
+        print("inside gen mca clean")
         module = Module.objects.get(module_name='Module 1')
-        dept = config.dept_id
+        dept = str(config.dept_id)
+        print(type(dept))
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='3', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
+        print("*****************")
+        print(subject)
+        print("******************")
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        print(cnt_DB)
         cnt_FE = int(self.cleaned_data.get('mod_1_A'))
+        print(cnt_DB)
         if cnt_DB >= cnt_FE:
             return self.cleaned_data.get('mod_1_A')
         else:
@@ -261,12 +270,14 @@ class GenerateQnPpr(forms.Form):
     def clean_mod_2_A(self):
         module = Module.objects.get(module_name='Module 2')
         dept = config.dept_id
+
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='3', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
         cnt_FE = int(self.cleaned_data.get('mod_2_A'))
+        print(cnt_DB)
         if cnt_DB >= cnt_FE:
             return self.cleaned_data.get('mod_2_A')
         else:
@@ -277,10 +288,11 @@ class GenerateQnPpr(forms.Form):
         dept = config.dept_id
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='3', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
         cnt_FE = int(self.cleaned_data.get('mod_3_A'))
+        print(cnt_DB)
         if cnt_DB >= cnt_FE:
             return self.cleaned_data.get('mod_3_A')
         else:
@@ -291,10 +303,11 @@ class GenerateQnPpr(forms.Form):
         dept = config.dept_id
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='3', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
         cnt_FE = int(self.cleaned_data.get('mod_4_A'))
+        print(cnt_DB)
         if cnt_DB >= cnt_FE:
             return self.cleaned_data.get('mod_4_A')
         else:
@@ -305,10 +318,11 @@ class GenerateQnPpr(forms.Form):
         dept = config.dept_id
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='3', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
         cnt_FE = int(self.cleaned_data.get('mod_5_A'))
+        print(cnt_DB)
         if cnt_DB >= cnt_FE:
             return self.cleaned_data.get('mod_5_A')
         else:
@@ -319,10 +333,11 @@ class GenerateQnPpr(forms.Form):
         dept = config.dept_id
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='3', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
         cnt_FE = int(self.cleaned_data.get('mod_6_A'))
+        print(cnt_DB)
         if cnt_DB >= cnt_FE:
             return self.cleaned_data.get('mod_6_A')
         else:
@@ -337,7 +352,7 @@ class GenerateQnPpr(forms.Form):
         dept = config.dept_id
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='6', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
         cnt_FE = int(self.cleaned_data.get('mod_1_B'))
@@ -351,7 +366,7 @@ class GenerateQnPpr(forms.Form):
         dept = config.dept_id
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='6', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
         cnt_FE = int(self.cleaned_data.get('mod_2_B'))
@@ -365,7 +380,7 @@ class GenerateQnPpr(forms.Form):
         dept = config.dept_id
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='6', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
         cnt_FE = int(self.cleaned_data.get('mod_3_B'))
@@ -379,7 +394,7 @@ class GenerateQnPpr(forms.Form):
         dept = config.dept_id
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='6', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
         cnt_FE = int(self.cleaned_data.get('mod_4_B'))
@@ -393,7 +408,7 @@ class GenerateQnPpr(forms.Form):
         dept = config.dept_id
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='6', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
         cnt_FE = int(self.cleaned_data.get('mod_5_B'))
@@ -407,7 +422,7 @@ class GenerateQnPpr(forms.Form):
         dept = config.dept_id
         dept = Department.objects.get(dept_name=dept)
         mark = Mark.objects.get(mark_disp='6', dept=dept)
-        subject = config.SUB_CUR_SLCTD
+        subject = self.cleaned_data.get('sub_code')
         subject = Subject.objects.get(subname=subject, dept=dept)
         cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
         cnt_FE = int(self.cleaned_data.get('mod_6_B'))

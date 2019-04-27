@@ -105,9 +105,6 @@
                         {{ form_2.module|as_crispy_field }}
                         </div>
                     </div>
-                    {{ form_2.desc|as_crispy_field }}
-                    {{ form_2.fig|as_crispy_field }}
-
                     <div class="form-row">
                         <div class="form-group col-md-6 mb-0">
                             {{ form_2.klevel|as_crispy_field }}
@@ -116,6 +113,10 @@
                         {{ form_2.mark|as_crispy_field }}
                         </div>
                     </div>
+                    {{ form_2.desc|as_crispy_field }}
+                    {{ form_2.fig|as_crispy_field }}
+
+
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Add</button>
@@ -192,6 +193,7 @@
       var qn = $(this).val();
       var sub = $("#id_subject").val();
       var mod = $("#id_module").val();
+      var mark = $("#id_mark").val();
       console.log(qn)
 
       $.ajax({
@@ -200,6 +202,7 @@
           'qn': qn,
             'sub': sub,
             'mod' : mod,
+            'mark' : mark,
         },
         success: function (data) {
             /*obj = JSON.parse(data);
