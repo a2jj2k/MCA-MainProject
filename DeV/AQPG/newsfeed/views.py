@@ -54,9 +54,9 @@ def postViewall(request):
     print(posts)
     context = {
         'posts': posts,
-        'is_superuser': config.is_super_user,
-        'full_name': config.full_name,
-        'is_student': config.is_student,
+        'is_superuser': str(config.is_super_user),
+        'full_name': str(config.full_name),
+        'is_student': str(config.is_student),
         'dept_id': str(config.dept_id)
     }
     return render(request, 'newsfeed/newsfeed.html', context)
@@ -81,7 +81,10 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PostDetailView, self).get_context_data(**kwargs)
-        context['full_name'] = config.full_name
+        context['is_superuser'] = str(config.is_super_user)
+        context['full_name'] = str(config.full_name)
+        context['is_student'] = str(config.is_student)
+        context['dept_id'] = str(config.dept_id)
         return context
 
 class PostCreateView(CreateView):
@@ -94,7 +97,10 @@ class PostCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(PostCreateView, self).get_context_data(**kwargs)
-        context['full_name'] = config.full_name
+        context['is_superuser'] = str(config.is_super_user)
+        context['full_name'] = str(config.full_name)
+        context['is_student'] = str(config.is_student)
+        context['dept_id'] = str(config.dept_id)
         return context
 
 
@@ -115,7 +121,10 @@ class PostUpdateView(UserPassesTestMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(PostUpdateView, self).get_context_data(**kwargs)
-        context['full_name'] = config.full_name
+        context['is_superuser'] = str(config.is_super_user)
+        context['full_name'] = str(config.full_name)
+        context['is_student'] = str(config.is_student)
+        context['dept_id'] = str(config.dept_id)
         return context
 
 
@@ -126,7 +135,10 @@ class PostDeleteView(DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super(PostDeleteView, self).get_context_data(**kwargs)
-        context['full_name'] = config.full_name
+        context['is_superuser'] = str(config.is_super_user)
+        context['full_name'] = str(config.full_name)
+        context['is_student'] = str(config.is_student)
+        context['dept_id'] = str(config.dept_id)
         return context
 
 

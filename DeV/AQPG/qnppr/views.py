@@ -151,10 +151,11 @@ def subjectAdd(request):
         form = AddSubject()
         context = {
             'form': form,
-            'is_superuser': config.is_super_user,
-            'full_name': config.full_name,
-            'is_student': config.is_student,
-            'dept_id': config.dept_id
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id),
+
         }
     return render(request, 'qnppr/add_subject.html', context)
 
@@ -172,19 +173,19 @@ def coMapping(request):
         context = {
             'form_1': form_1,
             'form_2': form_2,
-            'is_superuser': config.is_super_user,
-            'full_name': config.full_name,
-            'is_student': config.is_student,
-            'dept_id': config.dept_id
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
         }
         print(context)
     return render(request, 'qnppr/map_subject_modules.html', {
                                                 'form_1': form_1,
                                                 'form_2': form_2,
-                                                'is_superuser': config.is_super_user,
-                                                'full_name': config.full_name,
-                                                'is_student': config.is_student,
-                                                'dept_id': config.dept_id})
+                                                'is_superuser': str(config.is_super_user),
+                                                'full_name': str(config.full_name),
+                                                'is_student': str(config.is_student),
+                                                'dept_id': str(config.dept_id)})
     #return render(request, 'qnppr/map_subject_modules.html',context)
 
 
@@ -199,10 +200,10 @@ def addBloomsKeywords(request):
         form = AddBloomKeyword()
         context = {
             'form': form,
-            'is_superuser': config.is_super_user,
-            'full_name': config.full_name,
-            'is_student': config.is_student,
-            'dept_id': config.dept_id
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
         }
     return render(request, 'qnppr/add_blooms_keywords.html', context)
 
@@ -218,10 +219,10 @@ def addMarks(request):
         form = AddMark()
         context = {
             'form': form,
-            'is_superuser': config.is_super_user,
-            'full_name': config.full_name,
-            'is_student': config.is_student,
-            'dept_id': config.dept_id
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
         }
 
     return render(request, 'qnppr/add_marks.html', context)
@@ -241,10 +242,10 @@ def addQuestions(request):
         context = {
             'form_1': form_1,
             'form_2': form_2,
-            'is_superuser': config.is_super_user,
-            'full_name': config.full_name,
-            'is_student': config.is_student,
-            'dept_id': config.dept_id
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
         }
     return render(request, 'qnppr/add_question.html', context)
 
@@ -275,7 +276,11 @@ def viewQuestionList(request):
         context = {
             'question_list': question_list,
             'form_1': form_1,
-            'form_2': form_2
+            'form_2': form_2,
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
         }
         return render(request, 'qnppr/question_list.html', context)
     else:
@@ -297,7 +302,11 @@ def viewQuestionList(request):
         context = {
             'question_list': question_list,
             'form_1': form_1,
-            'form_2': form_2
+            'form_2': form_2,
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
         }
     return render(request, 'qnppr/question_list.html', context)
 
@@ -346,7 +355,11 @@ def viewSubjectList(request):
     subject_list = Subject.objects.all()
     context = {
         'form_1': form_1,
-        'subject_list': subject_list
+        'subject_list': subject_list,
+        'is_superuser': str(config.is_super_user),
+        'full_name': str(config.full_name),
+        'is_student': str(config.is_student),
+        'dept_id': str(config.dept_id)
     }
     return render(request, 'qnppr/subject_list.html', context)
 
@@ -364,7 +377,11 @@ def subjectDetails(request, id):
         print(dict)
         context = {
             'sub_obj': sub_obj,
-            'co_obj': dict
+            'co_obj': dict,
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
         }
         return render(request, 'qnppr/subject_details.html', context)
     else:
@@ -683,7 +700,7 @@ def generateQnPaper_MCA(request):
                 final_result_part_B = []
 
                 for r in result_part_B:
-                    temp ={
+                    temp = {
                         'qn': c,
                         'desc': r['desc'],
                         'blm_lvl_name': r['blm_lvl_name'],
@@ -755,7 +772,11 @@ def generateQnPaper_MCA(request):
                     'part_A': final_result_part_A,
                     'part_B': final_result_part_B,
                     'blooms_tbl': final_blooms_tbl,
-                    'co_obj': dict
+                    'co_obj': dict,
+                    'is_superuser': str(config.is_super_user),
+                    'full_name': str(config.full_name),
+                    'is_student': str(config.is_student),
+                    'dept_id': str(config.dept_id)
                 }
                 pdf = render_to_pdf('qnppr/generated_qnppr_mca_internal.html', context)
                 #return render(request, 'qnppr/generated_qnppr_mca_internal.html', context)
@@ -774,17 +795,19 @@ def generateQnPaper_MCA(request):
             'form_1': form_1,
             'form_2': form_2,
             'form_3': form_3,
-            'is_superuser': config.is_super_user,
-            'full_name': config.full_name,
-            'is_student': config.is_student
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
         }
     return render(request, 'qnppr/generate_question_paper_mca.html', {
             'form_1': form_1,
             'form_2': form_2,
             'form_3': form_3,
-            'is_superuser': config.is_super_user,
-            'full_name': config.full_name,
-            'is_student': config.is_student
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
         })
 
 
