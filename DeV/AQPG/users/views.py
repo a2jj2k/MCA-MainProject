@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -164,10 +165,15 @@ def addDepartment(request):
 
 def viewUserList(request):
     form_1 = UserProfile()
-    user_list = User.objects.all()
+    #user_list = User.objects.all()
+    pro_list = Profile.objects.select_related('user').filter(is_student=False)
+    print(pro_list)
+    for i in pro_list:
+        print(i.image)
+        print(i.user.username)
     context = {
         'form_1': form_1,
-        'user_list': user_list,
+        'pro_list': pro_list,
         'is_superuser': str(config.is_super_user),
         'full_name': str(config.full_name),
         'is_student': str(config.is_student),
