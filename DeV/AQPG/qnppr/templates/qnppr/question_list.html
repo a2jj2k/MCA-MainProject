@@ -81,11 +81,93 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"></script>
-<script src="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"></script>-->
+<!--<script src="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"></script>-->
 
+<form method="POST" id="question_tblForm" data-sem-url="{% url 'ajax_load_sem' %}" data-sub-url="{% url 'ajax_load_sub' %}" data-qns-url="{% url 'ajax_question_list' %}">
+<div class="form-row">
+    <div class="form-group col-md-2 mb-0">
+        {{ form_1.dept|as_crispy_field }}
+    </div>
+    <div class="form-group col-md-2 mb-0">
+        {{ form_1.sem|as_crispy_field }}
+    </div>
+    <div class="form-group col-md-4 mb-0">
+        {{ form_2.sub_code|as_crispy_field }}
+    </div>
+    <div class="form-group col-md-2 mb-0">
+        {{ form_2.module|as_crispy_field }}
+    </div>
+</div>
+</form>
+
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+<script>
+
+    $("#id_dept").change(function () {
+      var url = $("#question_tblForm").attr("data-sem-url");
+      var deptId = $(this).val();
+
+
+      $.ajax({
+        url: url,
+        data: {
+          'dept': deptId
+        },
+        success: function (data) {
+          $("#id_sem").html(data);
+        }
+      });
+
+    });
+
+    $("#id_sem").change(function () {
+      var url = $("#question_tblForm").attr("data-sub-url");
+      var semId = $(this).val();
+      var deptId=$("#id_dept").val();
+
+
+      $.ajax({
+        url: url,
+        data: {
+          'dept': deptId,
+            'sem': semId
+        },
+        success: function (data) {
+          $("#id_sub_code").html(data);
+        }
+      });
+
+    });
+
+    $("#id_module").change(function () {
+      var url = $("#question_tblForm").attr("data-qns-url");
+      var deptId=$("#id_dept").val();
+      var semId=$("#id_sem").val();
+      var subId=$("#id_sub_code").val();
+      var modId=$("#id_module").val();
+      console.log("***********")
+      console.log(modId)
+
+      $.ajax({
+        url: url,
+        data: {
+          'deptId': deptId,
+            'semId': semId,
+            'subId': subId,
+            'modId': modId
+        },
+        success: function (data) {
+          $("#ajax_question_list").html(data);
+        }
+      });
+
+    });
+</script>
+
+<div id="ajax_question_list">
 <table id="question_tbl" class="table table-striped table-bordered" style="width:100%">
-        <thead>
+        <thead >
             <tr>
                 <th>Question</th>
                 <th>Klevel</th>
@@ -99,15 +181,16 @@
         <tr>
 
             <td style="color:black;">{{qn.desc}}</td>
-            <td style="color:black;">{{qn.klevel}}</td>
-            <td style="color:black;">{{qn.module}}</td>
+            <td style="color:black;">{{qn.blm_lvl_name}}</td>
+            <td style="color:black;">{{qn.module_name}}</td>
 
-            <td style="color:black;">{{qn.subject}}</td>
-            <td style="color:black;">{{qn.mark}}</td>
+            <td style="color:black;">{{qn.subname}}</td>
+            <td style="color:black;">{{qn.mark_disp}}</td>
         </tr>
         {%endfor%}
         </tbody>
     </table>
+</div>
             <script>
                 $(document).ready(function() {
     $('#question_tbl').DataTable();

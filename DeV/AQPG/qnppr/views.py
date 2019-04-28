@@ -257,19 +257,89 @@ def addQuestions(request):
 
 def viewQuestionList(request):
     if request.method == 'POST':
-        question_list = Question.objects.all()
+        form_1 = CoMapping_form1()
+        form_2 = CoMapping_form2()
+        dept = int(config.dept_id.id)
+        #question_list = Question.objects.all()
+        cursor = connection.cursor()
+        cursor.execute("""select qq.desc, qb.blm_lvl_name, qm.module_name, qs.subname, qma.mark_disp, qsm.sem_name
+                                    from qnppr_question qq
+                                    left outer join qnppr_subject qs on qs.id = qq.subject_id
+                                    left outer join qnppr_blooms_lvl qb on qb.id = qq.klevel_id
+                                    left outer join qnppr_module qm on qm.id = qq.module_id
+                                    left outer join qnppr_mark qma on qma.id = qq.mark_id
+                                    left outer join qnppr_semester qsm on qsm.id = qs.dept_id
+                                    where qs.dept_id = '%d'""" % (dept))
+        question_list = []
+        question_list = dictfetchall(cursor)
         context = {
-            'question_list': question_list
+            'question_list': question_list,
+            'form_1': form_1,
+            'form_2': form_2
         }
         return render(request, 'qnppr/question_list.html', context)
     else:
-        #form_1 = CoMapping_form1()
-        #form_2 = AddQuestion()
-        question_list = Question.objects.all()
+        form_1 = CoMapping_form1()
+        form_2 = CoMapping_form2()
+        dept = int(config.dept_id.id)
+        # question_list = Question.objects.all()
+        cursor = connection.cursor()
+        cursor.execute("""select qq.desc, qb.blm_lvl_name, qm.module_name, qs.subname, qma.mark_disp, qsm.sem_name
+                                            from qnppr_question qq
+                                            left outer join qnppr_subject qs on qs.id = qq.subject_id
+                                            left outer join qnppr_blooms_lvl qb on qb.id = qq.klevel_id
+                                            left outer join qnppr_module qm on qm.id = qq.module_id
+                                            left outer join qnppr_mark qma on qma.id = qq.mark_id
+                                            left outer join qnppr_semester qsm on qsm.id = qs.dept_id
+                                            where qs.dept_id = '%d'""" % (dept))
+        question_list = []
+        question_list = dictfetchall(cursor)
         context = {
-            'question_list': question_list
+            'question_list': question_list,
+            'form_1': form_1,
+            'form_2': form_2
         }
     return render(request, 'qnppr/question_list.html', context)
+
+def load_question_list(request):
+    print("Inside ajaxsubjectlist")
+    dept = int(request.GET.get('deptId'))
+    #request.GET.get
+    sem = int(request.GET.get('semId'))
+    sub = int(request.GET.get('subId'))
+    mod = int(request.GET.get('modId'))
+    print(dept)
+    print(sem)
+    print(sub)
+    print(mod)
+
+    """dept = Department.objects.get(id=int(dept))
+    sem = Semester.objects.get(id=int(sem))
+    sub = Subject.objects.get(id=int(sub))
+    mod = Module.objects.get(id=int(mod))"""
+
+    cursor = connection.cursor()
+    cursor.execute("""select qq.desc, qb.blm_lvl_name, qm.module_name, qs.subname, qma.mark_disp, qsm.sem_name
+                                from qnppr_question qq
+                                left outer join qnppr_subject qs on qs.id = qq.subject_id
+                                left outer join qnppr_blooms_lvl qb on qb.id = qq.klevel_id
+                                left outer join qnppr_module qm on qm.id = qq.module_id
+                                left outer join qnppr_mark qma on qma.id = qq.mark_id
+                                left outer join qnppr_semester qsm on qsm.id = qs.dept_id
+                                where qs.dept_id = '%d' and qsm.id = '%d' and qs.id = '%d' and qm.id = '%d'"""%(dept, sem, sub, mod))
+    question_list = []
+    question_list = dictfetchall(cursor)
+
+
+    #question_list = Question.objects.filter()
+    print(question_list)
+
+
+    context = {
+        'question_list': question_list
+
+    }
+    return render(request, 'qnppr/ajax_question_list.html', context)
 
 def viewSubjectList(request):
     form_1 = DeptSemForm()
@@ -710,6 +780,7 @@ def generateQnPaper_MCA(request):
 
 
 def load_semesters(request):
+    print("inside sem ajax")
     dept_id = request.GET.get('dept')
     sem = Semester.objects.filter(dept_id_id=dept_id).order_by('sem_name')
     return render(request, 'qnppr/sem_dropdown_list.html', {'sem': sem})
@@ -720,6 +791,7 @@ def load_subjects(request):
     sem_id = request.GET.get('sem')
     subject = Subject.objects.filter(dept_id=dept_id,sem_id=sem_id ).order_by('subname')
     return render(request, 'qnppr/subject_dropdown_list.html', {'sub': subject})
+
 
 def klevel_prediction(request):
     qns = request.GET.get('qn')

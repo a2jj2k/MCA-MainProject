@@ -19,5 +19,6 @@ urlpatterns = [
     path('ajax/load-klevel-predi/', klevel_prediction, name='ajax_predi_klevel'),
     path('ajax/similarity-checker/', similarity_checker, name='ajax_similarity_checker'),
     path('ajax/subject-list/', load_subjectlist, name='ajax_sub_list'),
+    path('ajax/question-list/', load_question_list, name='ajax_question_list'),
     path('test/', load_testform, name="test"),
 ]

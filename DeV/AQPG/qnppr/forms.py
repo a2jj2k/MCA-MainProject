@@ -62,14 +62,14 @@ class CoMapping_form1(forms.ModelForm):
             'dept': 'Department', 'sem': 'Semester'
         }
 
-    def clean_dept(self):
+    """def clean_dept(self):
 
         #print(self.cleaned_data.get('dept'))
         config.co_mapping_dept_id = self.cleaned_data.get('dept')
         #print("******")
         #print(config.co_mapping_dept_id)
         #print("############")
-        return self.cleaned_data.get('dept')
+        return self.cleaned_data.get('dept')"""
 
 class CoMapping_form2(forms.ModelForm):
     class Meta:
@@ -87,7 +87,7 @@ class CoMapping_form2(forms.ModelForm):
         co_id = self.cleaned_data.get('co_id')
         print(s_code)
         print(mod_id)
-        print(config.co_mapping_dept_id)
+        #print(config.co_mapping_dept_id)
         subject = Subject.objects.get(subname=s_code)
         module = Module.objects.get(module_name=mod_id)
         co_id = Co.objects.get(co_cd_name=co_id)
