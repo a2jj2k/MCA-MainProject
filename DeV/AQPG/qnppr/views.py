@@ -743,7 +743,13 @@ def klevel_prediction(request):
             return JsonResponse(r, safe=False)
 
 def whRemover(param):
-    wh_words = ['who', 'what', 'how', 'when', 'Where']
+    wh_words = []
+    blms = Blooms_keyword.objects.all()
+    for i in blms:
+        wh_words.append(str(i.blm_verb))
+    wh_words = wh_words + ['who', 'what', 'how', 'when', 'Where']
+    print(wh_words)
+    #wh_words = ['who', 'what', 'how', 'when', 'Where']
     spltd_str = param.split()
     #print(type(spltd_str))
     #print(spltd_str)
