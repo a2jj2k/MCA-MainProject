@@ -165,60 +165,32 @@
         {% endfor %}
     </table>
 </div>
-
-    <!--<table border="1" cellspacing="0" cellpadding="5"  align="center" class="new-page">
+<div class="new-page">
+    <center><img src="/media/sjcet.png" height="100px" width="100px"></center>
+    <center><h1 style="font-family:Times New Roman; font-size: 19px;">ST.JOSEPH'S COLLEGE OF ENGINEERING & TECHNOLOGY, PALAI</h1></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px;">(An ISO 9001: 2008 Certified College)</p></center>
+    <center><p style="padding-top: -18px;font-family:Times New Roman; font-size: 13px;">(Affiliated to APJ Abdul Kalam Technological University)</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px; font-weight: bold">DEPARTMENT OF COMPUTER SCIENCE AND APPLICATIONS</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px;">First Internal Assessment Examination &nbsp; March &nbsp; 2019</p></center>
+    <center><p style="padding-top: -17px; font-family:Times New Roman; font-size: 13px;">Semester  1</p></center>
+    <center><p style="padding-top: -10px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">RLMCA 208 &nbsp; Introduction to Machine Learning</p></center>
+</div>
+<div>
+<table border="1" cellspacing="0" cellpadding="5"  align="center" style="font-family: 'Times New Roman';font-size: 13px">
         <tr>
-            <th width="70px"></th>
-            <th width="50px">K1</th>
-            <th width="50px">K2</th>
-            <th width="50px">K3</th>
-            <th width="50px">K4</th>
-            <th width="50px">K5</th>
-            <th width="50px">K6</th>
+            <th width="100px">Module</th>
+            <th width="100px">CO</th>
+            <th width="400px">Co Description</th>
         </tr>
-        {% for b in blooms_tbl %}
+        {% for c in co_obj %}
         <tr>
-            <td align="center"><b>{{ b.qn }}</b></td>
-            {% ifequal b.k1 0%}
-                <td ></td>
-            {% else %}
-                <td >{{ b.k1 }}</td>
-            {% endifequal %}
-
-            {% ifequal b.k2 0%}
-                <td ></td>
-            {% else %}
-                <td >{{ b.k2 }}</td>
-            {% endifequal %}
-
-            {% ifequal b.k3 0%}
-                <td ></td>
-            {% else %}
-                <td >{{ b.k3 }}</td>
-            {% endifequal %}
-
-            {% ifequal b.k4 0%}
-                <td ></td>
-            {% else %}
-                <td >{{ b.k4 }}</td>
-            {% endifequal %}
-
-            {% ifequal b.k5 0%}
-                <td ></td>
-            {% else %}
-                <td >{{ b.k5 }}</td>
-            {% endifequal %}
-
-            {% ifequal b.k6 0%}
-                <td ></td>
-            {% else %}
-                <td >{{ b.k6 }}</td>
-            {% endifequal %}
-
-
+            <td style="text-align:center;">{{ c.module_name }}</td>
+            <td style="text-align:center;">{{ c.co_cd_name }}</td>
+            <td >{{ c.co_desc }}</td>
         </tr>
         {% endfor %}
-    </table>-->
+    </table>
+</div>
 
 </body>
 </html>

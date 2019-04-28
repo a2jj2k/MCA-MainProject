@@ -743,10 +743,19 @@ def generateQnPaper_MCA(request):
                     print(i)
 
                 print(final_result_part_A)
+                cursor = connection.cursor()
+                cursor.execute("""SELECT qm.module_name, qc.co_cd_name, qcm.co_desc
+                                            FROM qnppr_co_mapping qcm 
+                                            LEFT OUTER JOIN qnppr_module qm ON qm.id = qcm.module_id
+                                            LEFT OUTER JOIN qnppr_co qc ON qc.id = qcm.co_id_id
+                                            WHERE qcm.sub_code_id = '%d'""" % (subject))
+                dict = {}
+                dict = dictfetchall(cursor)
                 context = {
                     'part_A': final_result_part_A,
                     'part_B': final_result_part_B,
-                    'blooms_tbl': final_blooms_tbl
+                    'blooms_tbl': final_blooms_tbl,
+                    'co_obj': dict
                 }
                 pdf = render_to_pdf('qnppr/generated_qnppr_mca_internal.html', context)
                 #return render(request, 'qnppr/generated_qnppr_mca_internal.html', context)
