@@ -3,3 +3,4 @@ from archive.models import *
 
 # Register your models here.
 admin.site.register(ExamType)
+admin.site.register(Archive)

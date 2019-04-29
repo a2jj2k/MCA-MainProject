@@ -25,6 +25,9 @@
           <option value="AQPG.archive.models.Department" />
           <option value="AQPG.archive.models.*" />
           <option value="AQPG.archive.admin.*" />
+          <option value="AQPG.archive.urls.*" />
+          <option value="AQPG.archive.views.*" />
+          <option value="AQPG.archive.forms.*" />
         </list>
       </option>
     </inspection_tool>
