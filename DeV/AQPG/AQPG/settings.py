@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'users',
     'qnppr',
     'newsfeed',
+    'archive',
     'crispy_forms'
 ]
 
