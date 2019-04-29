@@ -247,7 +247,14 @@ def addQuestions(request):
             'is_student': str(config.is_student),
             'dept_id': str(config.dept_id)
         }
-    return render(request, 'qnppr/add_question.html', context)
+    return render(request, 'qnppr/add_question.html', {
+            'form_1': form_1,
+            'form_2': form_2,
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
+        })
 
 """def generateQnPaper(request):
     if str(config.dept_id) == 'MCA':

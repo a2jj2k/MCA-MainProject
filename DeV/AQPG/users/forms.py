@@ -5,6 +5,18 @@ from django.core.exceptions import ValidationError
 from users.models import *
 
 
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['email']
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
+
 class UserRegisterForm_user(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=150)

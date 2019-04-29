@@ -97,7 +97,7 @@
 
 
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'archive_list' %}">Archive</a>
+      <a class="nav-link" href="#">Archive</a>
    </li>
     </ul>
 {% else %}
@@ -109,7 +109,7 @@
    </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'archive_list' %}">Archive</a>
+      <a class="nav-link" href="#">Archive</a>
    </li>
     </ul>
 
@@ -124,7 +124,7 @@
           {{ full_name }}
         </a>
         <div class="dropdown-menu" style="left: auto !important; right: 0px" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+          <a class="dropdown-item" href="#">Profile</a>
           <a class="dropdown-item" href="#">pswd mngnmnt</a>
           <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
           <!--<div class="dropdown-divider"></div>
@@ -147,77 +147,115 @@
 {% endblock %}
 
 {% block content %}
-            <style>
+
+                <style>
                 body {
-                    background: #fafafa;
-                    color: #333333;
-                }
+  background: #fafafa;
+  color: #333333;
+}
 
-                h1, h2, h3, h4, h5, h6 {
-                    color: #444444;
-                    }
+h1, h2, h3, h4, h5, h6 {
+  color: #444444;
+}
 
-                ul {
-                    margin: 0;
-                }
+ul {
+  margin: 0;
+}
 
-                .site-header .navbar-nav .nav-link {
-                    color: #cbd5db;
-                }
+.bg-steel {
+  background-color: #5f788a;
+}
 
-                .site-header .navbar-nav .nav-link:hover {
-                    color: #ffffff;
-                }
+.site-header .navbar-nav .nav-link {
+  color: #cbd5db;
+}
 
-                .site-header .navbar-nav .nav-link.active {
-                    font-weight: 500;
-                }
+.site-header .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
 
-                .content-section {
-                    background: #ffffff;
-                    padding: 10px 20px;
-                    border: 1px solid #dddddd;
-                    border-radius: 3px;
-                    margin-bottom: 20px;
-                }
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
 
-                .article-title {
-                    color: #444444;
-                }
-                a.article-title:hover {
-                    color: #428bca;
-                    text-decoration: none;
-                }
-                .article-content {
-                    white-space: pre-line;
-                }
-                .article-img {
-                    height: 65px;
-                    width: 65px;
-                    margin-right: 16px;
-                }
-                .article-metadata {
-                    padding-bottom: 1px;
-                    margin-bottom: 4px;
-                    border-bottom: 1px solid #e3e3e3
-                }
-                .article-metadata a:hover {
-                    color: #333;
-                    text-decoration: none;
-                }
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.article-title {
+  color: #444444;
+}
+
+a.article-title:hover {
+  color: #428bca;
+  text-decoration: none;
+}
+
+.article-content {
+  white-space: pre-line;
+}
+
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+}
+
+.article-metadata {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+.article-metadata a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.article-svg {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
             </style>
-    {% for post in posts %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="/media/{{ post.image }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{% url 'view_user_detail' post.user_id %}" target="_blank">{{ post.username }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-            </div>
-            <!--<h2>{{ post.title }}</h2>-->
-              <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
+
+    <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
+            <p class="text-secondary"><strong>Username</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>:</strong> {{ user.username }}</p>
+            <p class="text-secondary" style="margin-top: -18px"><strong>Email</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>:</strong> {{ user.email }}</p>
+            <p class="text-secondary" style="margin-top: -18px"><strong>Department</strong>&nbsp;<strong>:</strong> {{ user.profile.dept_id }}</p>
+            <p class="text-secondary" style="margin-top: -18px"><strong>Last Login</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>:</strong> {{ user.last_login }}</p>
+        </div>
+      </div>
+      <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Profile Info</legend>
+              {{ u_form|crispy }}
+              {{ p_form|crispy }}
+          </fieldset>
+          <div class="form-group">
+              <button class="btn btn-outline-info" type="submit">Update</button>
           </div>
-        </article>
-    {% endfor %}
+      </form>
+    </div>
+
 {% endblock content %}
