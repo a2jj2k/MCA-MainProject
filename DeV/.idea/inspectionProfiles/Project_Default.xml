@@ -22,6 +22,9 @@
           <option value="AQPG.newsfeed.admin.*" />
           <option value="AQPG.newsfeed.views.*" />
           <option value="AQPG.newsfeed.urls.*" />
+          <option value="AQPG.archive.models.Department" />
+          <option value="AQPG.archive.models.*" />
+          <option value="AQPG.archive.admin.*" />
         </list>
       </option>
     </inspection_tool>
