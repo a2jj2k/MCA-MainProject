@@ -1,11 +1,33 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db import connection
+from django.contrib import messages
 
 from qnppr.models import *
 from archive.models import *
 from archive.forms import *
 
 from users import config
+
+def archiveAdd(request):
+    if request.method == 'POST':
+        #form = UserRegisterForm_user(request.POST)
+        form = ArchiveForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Archive Successfully Added')
+            print("*******")
+            return redirect('add_archive')
+    else:
+        #u_form = UserRegisterForm_user()
+        form = ArchiveForm()
+        context = {
+            'form': form,
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
+        }
+    return render(request, 'archive/add_archive.html', context)
 
 
 

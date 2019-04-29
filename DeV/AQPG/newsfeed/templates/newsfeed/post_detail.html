@@ -96,9 +96,16 @@
    </li>
 
 
-    <li class="nav-item">
-      <a class="nav-link" href="#">Archive</a>
-   </li>
+    <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Archive
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'add_archive' %}">Add</a>
+          <a class="dropdown-item" href="{% url 'archive_list' %}">View</a>
+        </div>
+      </li>
+
     </ul>
 {% else %}
 
@@ -109,8 +116,9 @@
    </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="#">Archive</a>
+      <a class="nav-link" href="{% url 'archive_list' %}">Archive</a>
    </li>
+
     </ul>
 
 {% endif %}
@@ -124,7 +132,7 @@
           {{ full_name }}
         </a>
         <div class="dropdown-menu" style="left: auto !important; right: 0px" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Profile</a>
+          <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
           <a class="dropdown-item" href="#">pswd mngnmnt</a>
           <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
           <!--<div class="dropdown-divider"></div>

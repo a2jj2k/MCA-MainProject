@@ -148,34 +148,83 @@
 
 {% block main_divs %}
 
-<div class="col-md-3"></div>
-        <div class="col-md-5" style="margin-top: 10">
+<div class="col-md-2"></div>
+        <div class="col-md-8" style="margin-top: 10">
 
 {% endblock %}
 
 {% block content %}
 
     <div class="content-section" style="background: white; padding: 10px 20px; border: 1px solid #dddddd; border-radius: 3px;">
-        <form method="POST" enctype="multipart/form-data" autocomplete="off">
+        <form method="POST" id="addArchiveForm" data-sem-url="{% url 'ajax_load_sem' %}" data-sub-url="{% url 'ajax_load_sub' %}" enctype="multipart/form-data" autocomplete="off">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Add User Here</legend>
-                {{ u_form|crispy }}
-                <!--<div class="form-row">
+                <legend class="border-bottom mb-4">Add Archives Here</legend>
+                <div class="form-row">
                         <div class="form-group col-md-6 mb-0">
-                            {{ p_form.dept_id|as_crispy_field }}
+                            {{ form.dept|as_crispy_field }}
                         </div>
                         <div class="form-group col-md-6 mb-0">
-                        {{ p_form.is_student|as_crispy_field }}
+                        {{ form.sem|as_crispy_field }}
                         </div>
                 </div>
-                {{ p_form.image|as_crispy_field }}-->
-                {{ p_form|crispy }}
+                <div class="form-row">
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.subject|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6 mb-0">
+                        {{ form.exm_type|as_crispy_field }}
+                        </div>
+                </div>
+                {{ form.desc|as_crispy_field }}
+                {{ form.attachment|as_crispy_field }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Sign Up</button>
+                <button class="btn btn-outline-info" type="submit">Add</button>
             </div>
         </form>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+    $("#id_dept").change(function () {
+      var url = $("#addArchiveForm").attr("data-sem-url");
+      var deptId = $(this).val();
+
+
+      $.ajax({
+        url: url,
+        data: {
+          'dept': deptId
+        },
+        success: function (data) {
+          $("#id_sem").html(data);
+        }
+      });
+
+    });
+
+    $("#id_sem").change(function () {
+      var url = $("#addArchiveForm").attr("data-sub-url");
+      var semId = $(this).val();
+      var deptId=$("#id_dept").val();
+
+
+      $.ajax({
+        url: url,
+        data: {
+          'dept': deptId,
+            'sem': semId
+        },
+        success: function (data) {
+          $("#id_subject").html(data);
+        }
+      });
+
+    });
+
+
+</script>
        <!-- <div class="border-top pt-3">
             <small class="text-muted">
                 Already Have An Account? <a class="ml-2" href="#">Sign In</a>
