@@ -168,7 +168,14 @@ def userAdd(request):
             'is_student': str(config.is_student),
             'dept_id': str(config.dept_id)
         }
-    return render(request, 'users/add_user.html', context)
+    return render(request, 'users/add_user.html', {
+            'u_form': u_form,
+            'p_form': p_form,
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
+        })
 
 def addDepartment(request):
     if request.method == 'POST':
@@ -188,7 +195,13 @@ def addDepartment(request):
             'is_student': str(config.is_student),
             'dept_id': str(config.dept_id)
         }
-    return render(request, 'users/add_department.html', context)
+    return render(request, 'users/add_department.html', {
+            'form': form,
+            'is_superuser': str(config.is_super_user),
+            'full_name': str(config.full_name),
+            'is_student': str(config.is_student),
+            'dept_id': str(config.dept_id)
+        })
 
 def viewUserList(request):
     form_1 = UserProfile()
