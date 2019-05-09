@@ -98,6 +98,7 @@ def user_login(request):
             config.is_super_user = str(user.is_superuser)
             config.is_student = prof.is_student
             config.dept_id = prof.dept_id
+            config.dept_mark = prof.dept_id
             #print("******")
             print(config.iid)
             print(config.full_name)
@@ -105,6 +106,8 @@ def user_login(request):
             print(config.is_student)
             print(type(config.is_student))
             print(config.dept_id)
+            print(type(config.dept_id))
+            #print(config.dept_mark)
             #print("********")
             context = {
                 'is_superuser': str(config.is_super_user),

@@ -21,7 +21,7 @@
             margin-right: 2cm;
             margin-bottom: 2cm;
 
-            
+
         }
     </style>
 </head>
@@ -39,7 +39,7 @@
 
 <div>
 <center><p style="padding-top: 30px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">PART A</p></center>
-<center><p style="padding-top: -15px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">(Each Question carries 3 marks, Answer all Questions)</p></center>
+<center><p style="padding-top: -15px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">(Answer all Questions. Each question carries 2 marks.)</p></center>
     <table border="1" cellspacing="0" cellpadding="5"  align="center" style="font-family: 'Times New Roman';font-size: 15px">
         <!--<col width="10">
         <col width="200">
@@ -65,7 +65,7 @@
 
 <div>
 <center><p style="padding-top: 30px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">PART B</p></center>
-<center><p style="padding-top: -15px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">(Answer any 2 questions, one full question from each module and carries 6 marks.)</p></center>
+<center><p style="padding-top: -15px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">(Answer any 3 questions. Each question carries 10 marks.)</p></center>
 <table border="1" cellspacing="0" cellpadding="5"  align="center" style="font-family: 'Times New Roman';font-size: 15px">
         <!--<col width="10">
         <col width="200">
@@ -84,17 +84,32 @@
             <td style="width:50px;text-align:center">{{ b.blm_lvl_name }}</td>
             <td style="width:50px;text-align:center">{{ b.co_cd_name }}</td>
         </tr>
-{% if forloop.counter|divisibleby:2 %}
 
-{% else %}
+{% endfor %}
+</table>
+</div>
+
+<div>
+<center><p style="padding-top: 30px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">PART C</p></center>
+<center><p style="padding-top: -15px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">(Cumpulsory question. This question carries 20 marks.)</p></center>
+<table border="1" cellspacing="0" cellpadding="5"  align="center" style="font-family: 'Times New Roman';font-size: 15px">
+        <!--<col width="10">
+        <col width="200">
+        <col width="10">
+        <col width="10">-->
+        <tr>
+            <th style="width:50px;">Q.No</th>
+            <th style="width:200px;">Questions</th>
+            <th style="width:50px;">K Level</th>
+            <th style="width:50px;">CO</th>
+        </tr>
+{% for c in part_C %}
 <tr>
-    <td></td>
-    <td style="text-align:center; font-weight: bold">OR</td>
-    <td></td>
-    <td></td>
-
-</tr>
-{% endif %}
+            <td style="width:50px;text-align:center">{{ c.qn }}</td>
+            <td style="width:500px;">{{ c.desc }}</td>
+            <td style="width:50px;text-align:center">{{ c.blm_lvl_name }}</td>
+            <td style="width:50px;text-align:center">{{ c.co_cd_name }}</td>
+        </tr>
 {% endfor %}
 </table>
 </div>

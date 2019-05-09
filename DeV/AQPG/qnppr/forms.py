@@ -8,6 +8,8 @@ from users.views import *
 
 from users import config
 
+
+
 class AddSubject(forms.ModelForm):
 
     class Meta:
@@ -146,6 +148,9 @@ class AddMark(forms.ModelForm):
 
 
 class AddQuestion(forms.ModelForm):
+    #d = Mark.objects.filter(dept=config.dept_mark)
+    #print(d)
+    #mark = forms.ModelChoiceField(queryset=Mark.objects.filter(dept=config.dept_mark), label="Mark")
     class Meta:
         model = Question
         fields = ['subject', 'module', 'desc', 'fig', 'klevel', 'mark']
@@ -223,7 +228,7 @@ class DeptSemForm(forms.ModelForm):
 
 
 
-class GenerateQnPpr(forms.Form):
+class GenerateQnPprMCA(forms.Form):
     c = [(0, 0),(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
     c1 = [(0, 0), (2, 2)]
     exm = [('Internal', 'Internal')]
@@ -432,3 +437,312 @@ class GenerateQnPpr(forms.Form):
             raise forms.ValidationError('Insufficient no.of questions')
 
     """ module wise count checking method for PART - B  ends """
+
+
+class GenerateQnPprMBA(forms.Form):
+    c = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+    #c1 = [(0, 0), (2, 2)]
+    c1 = [(0, 0), (1, 1)]
+    exm = [('Internal', 'Internal')]
+    sub_code = forms.ModelChoiceField(queryset=Subject.objects.all(), label="Subject")
+    exm_type = forms.ChoiceField(choices=exm, label="Exam Type")
+    exam_name = forms.CharField(max_length=100)
+    mod_1_A = forms.ChoiceField(choices=c, label="Module 1")
+    mod_2_A = forms.ChoiceField(choices=c, label="Module 2")
+    mod_3_A = forms.ChoiceField(choices=c, label="Module 3")
+    mod_4_A = forms.ChoiceField(choices=c, label="Module 4")
+    mod_5_A = forms.ChoiceField(choices=c, label="Module 5")
+    mod_6_A = forms.ChoiceField(choices=c, label="Module 6")
+
+    mod_1_B = forms.ChoiceField(choices=c, label="Module 1")
+    mod_2_B = forms.ChoiceField(choices=c, label="Module 2")
+    mod_3_B = forms.ChoiceField(choices=c, label="Module 3")
+    mod_4_B = forms.ChoiceField(choices=c, label="Module 4")
+    mod_5_B = forms.ChoiceField(choices=c, label="Module 5")
+    mod_6_B = forms.ChoiceField(choices=c, label="Module 6")
+
+    mod_1_C = forms.ChoiceField(choices=c1, label="Module 1")
+    mod_2_C = forms.ChoiceField(choices=c1, label="Module 2")
+    mod_3_C = forms.ChoiceField(choices=c1, label="Module 3")
+    mod_4_C = forms.ChoiceField(choices=c1, label="Module 4")
+    mod_5_C = forms.ChoiceField(choices=c1, label="Module 5")
+    mod_6_C = forms.ChoiceField(choices=c1, label="Module 6")
+
+    """ module wise count checking method for PART - A  begins """
+
+    def clean_mod_1_A(self):
+        print("inside gen mba clean a mod - 1")
+        module = Module.objects.get(module_name='Module 1')
+        dept = str(config.dept_id)
+        print(type(dept))
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='2', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        print("*****************")
+        print(subject)
+        print("******************")
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        #print(cnt_DB)
+        cnt_FE = int(self.cleaned_data.get('mod_1_A'))
+        print(str(cnt_DB)+" module 1 " +str(cnt_FE))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_1_A')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_2_A(self):
+        module = Module.objects.get(module_name='Module 2')
+        dept = config.dept_id
+
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='2', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_2_A'))
+        print(str(cnt_DB)+" module 2 " +str(cnt_FE))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_2_A')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_3_A(self):
+        module = Module.objects.get(module_name='Module 3')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='2', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_3_A'))
+        print(str(cnt_DB)+" module 3 " +str(cnt_FE))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_3_A')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_4_A(self):
+        module = Module.objects.get(module_name='Module 4')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='2', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_4_A'))
+        print(str(cnt_DB)+" module 4 " +str(cnt_FE))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_4_A')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_5_A(self):
+        module = Module.objects.get(module_name='Module 5')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='2', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_5_A'))
+        print(str(cnt_DB)+" module 5 " +str(cnt_FE))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_5_A')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_6_A(self):
+        module = Module.objects.get(module_name='Module 6')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='2', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_6_A'))
+        print(str(cnt_DB)+" module 6 " +str(cnt_FE))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_6_A')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    """ module wise count checking method for PART - A  ends """
+
+    """ module wise count checking method for PART - B  begins """
+
+    def clean_mod_1_B(self):
+        print("inside gen mba clean b mod - 1")
+        module = Module.objects.get(module_name='Module 1')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='10', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_1_B'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_1_B')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_2_B(self):
+        module = Module.objects.get(module_name='Module 2')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='10', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_2_B'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_2_B')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_3_B(self):
+        module = Module.objects.get(module_name='Module 3')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='10', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_3_B'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_3_B')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_4_B(self):
+        module = Module.objects.get(module_name='Module 4')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='10', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_4_B'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_4_B')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_5_B(self):
+        module = Module.objects.get(module_name='Module 5')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='10', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_5_B'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_5_B')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_6_B(self):
+        module = Module.objects.get(module_name='Module 6')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='10', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_6_B'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_6_B')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    """ module wise count checking method for PART - B  ends """
+
+    """ module wise count checking method for PART - C  begins """
+
+    def clean_mod_1_C(self):
+        print("inside gen mba clean c mod - 1")
+        module = Module.objects.get(module_name='Module 1')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='20', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_1_C'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_1_C')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_2_C(self):
+        module = Module.objects.get(module_name='Module 2')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='20', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_2_C'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_2_C')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_3_C(self):
+        module = Module.objects.get(module_name='Module 3')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='20', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_3_C'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_3_C')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_4_C(self):
+        module = Module.objects.get(module_name='Module 4')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='20', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_4_C'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_4_C')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_5_C(self):
+        module = Module.objects.get(module_name='Module 5')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='20', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_5_C'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_5_C')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    def clean_mod_6_C(self):
+        module = Module.objects.get(module_name='Module 6')
+        dept = config.dept_id
+        dept = Department.objects.get(dept_name=dept)
+        mark = Mark.objects.get(mark_disp='20', dept=dept)
+        subject = self.cleaned_data.get('sub_code')
+        subject = Subject.objects.get(subname=subject, dept=dept)
+        cnt_DB = Question.objects.filter(subject=subject, module=module, mark=mark).count()
+        cnt_FE = int(self.cleaned_data.get('mod_6_C'))
+        if cnt_DB >= cnt_FE:
+            return self.cleaned_data.get('mod_6_C')
+        else:
+            raise forms.ValidationError('Insufficient no.of questions')
+
+    """ module wise count checking method for PART - C  ends """

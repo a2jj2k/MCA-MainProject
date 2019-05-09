@@ -203,7 +203,7 @@
                         {{ form_1.mod_6_A|as_crispy_field }}
                     </div>
                 </div>
-                <strong><p id="partaindicator" style="font-size: 13px; color: red">Total no.of questions selected for PART-A  0 / 6</p></strong>
+                <strong><p id="partaindicator" style="font-size: 13px; color: red">Total no.of questions selected for PART-A  0 / 5</p></strong>
 
                 <h6>No. of Questions For Part B From Each Module</h6>
                 <div class="form-row">
@@ -226,7 +226,30 @@
                         {{ form_1.mod_6_B|as_crispy_field }}
                     </div>
                 </div>
-                <strong><p id="partbindicator" style="font-size: 13px; color: red">Total no.of questions selected for PART-B  0 / 4</p></strong>
+                <strong><p id="partbindicator" style="font-size: 13px; color: red">Total no.of questions selected for PART-B  0 / 5</p></strong>
+
+                <h6>No. of Questions For Part C From Each Module</h6>
+                <div class="form-row">
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form_1.mod_1_C|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form_1.mod_2_C|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form_1.mod_3_C|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form_1.mod_4_C|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form_1.mod_5_C|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form_1.mod_6_C|as_crispy_field }}
+                    </div>
+                </div>
+                <strong><p id="partcindicator" style="font-size: 13px; color: red">Total no.of questions selected for PART-C  0 / 1</p></strong>
 
                <!-- {{ form|crispy }}-->
 
@@ -271,6 +294,7 @@
 
         partAcount();
         partBcount();
+        partCcount();
 
     });
 
@@ -310,6 +334,7 @@
 
         partAcount();
         partBcount();
+        partCcount();
 
     });
 
@@ -330,6 +355,7 @@
 
         partAcount();
         partBcount();
+        partCcount();
 
     });
   </script>
@@ -338,6 +364,7 @@
         <script>
             var total_A;
             var total_B;
+            var total_C;
             function partAcount() {
                 var cnt_A_module1 = Number($("#id_mod_1_A").val());
                 var cnt_A_module2 = Number($("#id_mod_2_A").val());
@@ -347,11 +374,11 @@
                 var cnt_A_module6 = Number($("#id_mod_6_A").val());
 
                 total_A = cnt_A_module1 + cnt_A_module2 + cnt_A_module3 + cnt_A_module4 + cnt_A_module5 + cnt_A_module6;
-                disp_a = "Total no.of questions selected for PART-A "+  total_A.toString() +" / 6"
+                disp_a = "Total no.of questions selected for PART-A "+  total_A.toString() +" / 5"
 
                 document.getElementById("partaindicator").innerHTML = disp_a;
                 console.log(total_A)
-                if (total_A == 6){
+                if (total_A == 5){
                     document.getElementById("partaindicator").style.color = "green";
                 }else{
                     document.getElementById("partaindicator").style.color = "red";
@@ -367,14 +394,34 @@
                 var cnt_B_module6 = Number($("#id_mod_6_B").val());
 
                 total_B = cnt_B_module1 + cnt_B_module2 + cnt_B_module3 + cnt_B_module4 + cnt_B_module5 + cnt_B_module6;
-                disp_b = "Total no.of questions selected for PART-B "+  total_B.toString() +" / 4"
+                disp_b = "Total no.of questions selected for PART-B "+  total_B.toString() +" / 5"
 
                 document.getElementById("partbindicator").innerHTML = disp_b;
                 console.log(total_B)
-                if (total_B == 4){
+                if (total_B == 5){
                     document.getElementById("partbindicator").style.color = "green";
                 }else{
                     document.getElementById("partbindicator").style.color = "red";
+                }
+            }
+
+            function partCcount() {
+                var cnt_C_module1 = Number($("#id_mod_1_C").val());
+                var cnt_C_module2 = Number($("#id_mod_2_C").val());
+                var cnt_C_module3 = Number($("#id_mod_3_C").val());
+                var cnt_C_module4 = Number($("#id_mod_4_C").val());
+                var cnt_C_module5 = Number($("#id_mod_5_C").val());
+                var cnt_C_module6 = Number($("#id_mod_6_C").val());
+
+                total_C = cnt_C_module1 + cnt_C_module2 + cnt_C_module3 + cnt_C_module4 + cnt_C_module5 + cnt_C_module6;
+                disp_b = "Total no.of questions selected for PART-C "+  total_C.toString() +" / 1"
+
+                document.getElementById("partcindicator").innerHTML = disp_b;
+                console.log(total_B)
+                if (total_C == 1){
+                    document.getElementById("partcindicator").style.color = "green";
+                }else{
+                    document.getElementById("partcindicator").style.color = "red";
                 }
             }
 
@@ -429,9 +476,37 @@
 
             });
 
+            $("#id_mod_1_C").change(function () {
+                partCcount();
+
+            });
+            $("#id_mod_2_C").change(function () {
+                partCcount();
+
+            });
+            $("#id_mod_3_C").change(function () {
+                partCcount();
+
+            });
+            $("#id_mod_4_C").change(function () {
+                partCcount();
+
+            });
+            $("#id_mod_5_C").change(function () {
+                partCcount();
+
+            });
+            $("#id_mod_6_C").change(function () {
+                partCcount();
+
+            });
+
             $('#generate').click(function(){
-                if (total_A != 6 || total_B != 4){
-                    alert('Total no.of selected questions should be \n PART - A :  6\n PART - B :  4');
+                console.log(total_A)
+                console.log(total_B)
+                console.log(total_C)
+                if (total_A != 5 || total_B != 5 || total_C != 1){
+                    alert('Total no.of selected questions should be \n PART - A :  5\n PART - B :  5\n PART - C :  1');
                     event.preventDefault();
                     $("#id_mod_1_A").val(0);
                     $("#id_mod_2_A").val(0);
@@ -447,7 +522,15 @@
                     $("#id_mod_5_B").val(0);
                     $("#id_mod_6_B").val(0);
 
-                }else{
+                    $("#id_mod_1_C").val(0);
+                    $("#id_mod_2_C").val(0);
+                    $("#id_mod_3_C").val(0);
+                    $("#id_mod_4_C").val(0);
+                    $("#id_mod_5_C").val(0);
+                    $("#id_mod_6_C").val(0);
+
+                }
+                else{
                     $("#generate").attr('formtarget', '_blank');
                 }
             });
