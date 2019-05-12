@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        @media print {
+  .new-page {
+    page-break-before: always;
+  }
+}
+    </style>
+    <style>
+        @page {
+            size: A4;
+            margin-top: 2cm;
+            margin-left: 2cm;
+            margin-right: 2cm;
+            margin-bottom: 2cm;
+
+
+        }
+    </style>
+</head>
+<body>
+<div>
+    <center><img src="/media/sjcet.png" height="100px" width="100px"></center>
+    <center><h1 style="font-family:Times New Roman; font-size: 19px;">ST.JOSEPH'S COLLEGE OF ENGINEERING & TECHNOLOGY, PALAI</h1></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px;">(An ISO 9001: 2008 Certified College)</p></center>
+    <center><p style="padding-top: -18px;font-family:Times New Roman; font-size: 13px;">(Affiliated to APJ Abdul Kalam Technological University)</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px; font-weight: bold">{{ department }}</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px; font-weight: bold">{{ exam_name }}</p></center>
+    <center><p style="padding-top: -17px; font-family:Times New Roman; font-size: 13px;">{{ semester }}</p></center>
+    <center><p style="padding-top: -10px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">{{ subject }}</p></center>
+</div>
+
+<div>
+<center><p style="padding-top: 30px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">PART A</p></center>
+<center><p style="padding-top: -15px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">(Answer all Questions)</p></center>
+    <table border="1" cellspacing="0" cellpadding="5"  align="center" style="font-family: 'Times New Roman';font-size: 15px">
+        <!--<col width="10">
+        <col width="200">
+        <col width="10">
+        <col width="10">-->
+        <tr>
+            <th style="width:50px;">Q.No</th>
+            <th style="width:200px;">Questions</th>
+            <th style="width:50px;">K Level</th>
+            <th style="width:50px;">CO</th>
+        </tr>
+{% for a in part_A %}
+        <tr>
+            <td style="width:50px;text-align:center">{{ a.qn }}</td>
+            <td style="width:500px;">{{ a.desc }}</td>
+            <td style="width:50px;text-align:center">{{ a.blm_lvl_name }}</td>
+            <td style="width:50px;text-align:center">{{ a.co_cd_name }}</td>
+        </tr>
+
+{% endfor %}
+</table>
+</div>
+
+<div>
+<center><p style="padding-top: 30px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">PART B</p></center>
+<center><p style="padding-top: -15px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">(Answer all questions)</p></center>
+<table border="1" cellspacing="0" cellpadding="5"  align="center" style="font-family: 'Times New Roman';font-size: 15px">
+        <!--<col width="10">
+        <col width="200">
+        <col width="10">
+        <col width="10">-->
+        <tr>
+            <th style="width:50px;">Q.No</th>
+            <th style="width:200px;">Questions</th>
+            <th style="width:50px;">K Level</th>
+            <th style="width:50px;">CO</th>
+        </tr>
+{% for b in part_B %}
+<tr>
+            <td style="width:50px;text-align:center">{{ b.qn }}</td>
+            <td style="width:500px;">{{ b.desc }}</td>
+            <td style="width:50px;text-align:center">{{ b.blm_lvl_name }}</td>
+            <td style="width:50px;text-align:center">{{ b.co_cd_name }}</td>
+        </tr>
+{% endfor %}
+</table>
+</div>
+
+<div class="new-page">
+    <center><img src="/media/sjcet.png" height="100px" width="100px"></center>
+    <center><h1 style="font-family:Times New Roman; font-size: 19px;">ST.JOSEPH'S COLLEGE OF ENGINEERING & TECHNOLOGY, PALAI</h1></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px;">(An ISO 9001: 2008 Certified College)</p></center>
+    <center><p style="padding-top: -18px;font-family:Times New Roman; font-size: 13px;">(Affiliated to APJ Abdul Kalam Technological University)</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px; font-weight: bold">{{ department }}</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px;">{{ exam_name }}</p></center>
+    <center><p style="padding-top: -17px; font-family:Times New Roman; font-size: 13px;">{{ semester }}</p></center>
+    <center><p style="padding-top: -10px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">{{ subject }}</p></center>
+</div>
+
+<div>
+   <table border="1" cellspacing="0" cellpadding="5"  align="center" style="font-family: 'Times New Roman';font-size: 13px">
+        <tr>
+            <th width="70px"></th>
+            <th width="50px">K1</th>
+            <th width="50px">K2</th>
+            <th width="50px">K3</th>
+            <th width="50px">K4</th>
+            <th width="50px">K5</th>
+            <th width="50px">K6</th>
+        </tr>
+        {% for b in blooms_tbl %}
+        <tr>
+            <td align="center"><b>{{ b.qn }}</b></td>
+            {% ifequal b.k1 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k1 }}</td>
+            {% endifequal %}
+
+            {% ifequal b.k2 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k2 }}</td>
+            {% endifequal %}
+
+            {% ifequal b.k3 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k3 }}</td>
+            {% endifequal %}
+
+            {% ifequal b.k4 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k4 }}</td>
+            {% endifequal %}
+
+            {% ifequal b.k5 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k5 }}</td>
+            {% endifequal %}
+
+            {% ifequal b.k6 0%}
+                <td ></td>
+            {% else %}
+                <td style="text-align:center;">{{ b.k6 }}</td>
+            {% endifequal %}
+
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<div class="new-page">
+    <center><img src="/media/sjcet.png" height="100px" width="100px"></center>
+    <center><h1 style="font-family:Times New Roman; font-size: 19px;">ST.JOSEPH'S COLLEGE OF ENGINEERING & TECHNOLOGY, PALAI</h1></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px;">(An ISO 9001: 2008 Certified College)</p></center>
+    <center><p style="padding-top: -18px;font-family:Times New Roman; font-size: 13px;">(Affiliated to APJ Abdul Kalam Technological University)</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px; font-weight: bold">{{ department }}</p></center>
+    <center><p style="font-family:Times New Roman; font-size: 13px;">{{ exam_name }}</p></center>
+    <center><p style="padding-top: -17px; font-family:Times New Roman; font-size: 13px;">{{ semester }}</p></center>
+    <center><p style="padding-top: -10px; font-family:Times New Roman; font-weight: bold; font-size: 13px;">{{ subject }}</p></center>
+</div>
+<div>
+<table border="1" cellspacing="0" cellpadding="5"  align="center" style="font-family: 'Times New Roman';font-size: 13px">
+        <tr>
+            <th width="100px">Module</th>
+            <th width="100px">CO</th>
+            <th width="400px">Co Description</th>
+        </tr>
+        {% for c in co_obj %}
+        <tr>
+            <td style="text-align:center;">{{ c.module_name }}</td>
+            <td style="text-align:center;">{{ c.co_cd_name }}</td>
+            <td >{{ c.co_desc }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>

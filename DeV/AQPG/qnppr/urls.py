@@ -12,6 +12,7 @@ urlpatterns = [
     #path('generate-qn-ppr/', generateQnPaper, name="gen-qn-ppr"),generateQnPaper_MCA
     path('generate-qn-ppr-mca/', generateQnPaper_MCA, name="gen-qn-ppr-mca"),
     path('generate-qn-ppr-mba/', generateQnPaper_MBA, name="gen-qn-ppr-mba"),
+    path('generate-qn-ppr-technical/', generateQnPaper_Technical, name="gen-qn-ppr-technical"),
     path('view-subjects/', viewSubjectList, name="sub_list"),
     path('<int:id>/view-subject-details/', subjectDetails, name="view_subject_detail"),
     path('view-questions/', viewQuestionList, name="qn-list"),

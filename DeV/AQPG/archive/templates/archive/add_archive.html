@@ -89,9 +89,9 @@
         {% if dept_id == 'MCA' %}
             <a class="nav-link" href="{% url 'gen-qn-ppr-mca' %}">Generate Qn Paper</a>
         {% elif dept_id == 'MBA' %}
-            <a class="nav-link" href="#">Generate Qn Paper</a>
+            <a class="nav-link" href="{% url 'gen-qn-ppr-mba' %}">Generate Qn Paper</a>
         {% else %}
-            <a class="nav-link" href="#">Generate Qn Paper</a>
+            <a class="nav-link" href="{% url 'gen-qn-ppr-technical' %}">Generate Qn Paper</a>
         {% endif %}
    </li>
 

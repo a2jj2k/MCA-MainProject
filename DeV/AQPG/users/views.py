@@ -99,7 +99,10 @@ def user_login(request):
             config.is_student = prof.is_student
             config.dept_id = prof.dept_id
             config.dept_mark = prof.dept_id
+            config.dept_dept_id = int(prof.dept_id.id)
             #print("******")
+            print(config.dept_dept_id)
+            print(type(config.dept_dept_id))
             print(config.iid)
             print(config.full_name)
             print(config.is_super_user)
